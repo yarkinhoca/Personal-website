@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CanoramIQ — Vehicle CAN Diagnostics</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="" crossorigin="" />
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="logo">CanoramIQ</h1>
+      <nav class="main-nav">
+        <a href="#features">Features</a>
+        <a href="#map">Map</a>
+        <a href="#scores">Scores</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="slider" id="heroSlider">
+      <div class="slide active">
+        <h2>Monitor CAN data over Bluetooth</h2>
+        <p>Connect your ELM327 adapter and stream vehicle CAN data through your phone.</p>
+      </div>
+      <div class="slide">
+        <h2>Map your drive</h2>
+        <p>See your latest drive cycle on a map and click points to view vehicle parameters.</p>
+      </div>
+      <div class="slide">
+        <h2>AI-driven diagnostics</h2>
+        <p>Automatic scoring for engine health, driver performance and fuel efficiency.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="features" class="cards">
+      <article class="card">
+        <h3>Live CAN Stream</h3>
+        <p>Receive and visualise real-time CAN parameters such as RPM, speed, coolant, and more.</p>
+      </article>
+      <article class="card">
+        <h3>Drive Path Overlay</h3>
+        <p>Route and data points are stitched with GPS so you can replay a session offline.</p>
+      </article>
+      <article class="card">
+        <h3>Cloud Analytics</h3>
+        <p>Sessions are uploaded to the cloud and used to train models that improve scoring.</p>
+      </article>
+    </section>
+
+    <section id="map" class="map-section">
+      <div class="map-column">
+        <div id="map" class="map"></div>
+      </div>
+      <aside class="panel">
+        <h3>Point Details</h3>
+        <div id="pointDetails">Click a marker on the map to see vehicle parameters.</div>
+        <button id="endDriveBtn" class="btn">End Drive & Generate Score</button>
+      </aside>
+    </section>
+
+    <section id="scores" class="scores">
+      <h2>Drive Score</h2>
+      <div class="score-cards">
+        <div class="score-card"><h4>Engine Health</h4><div id="engineScore">—</div></div>
+        <div class="score-card"><h4>Driver Performance</h4><div id="driverScore">—</div></div>
+        <div class="score-card"><h4>Fuel Efficiency</h4><div id="fuelScore">—</div></div>
+      </div>
+      <p class="note">This demo uses simulated scoring. Connect your backend AI when ready.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> CanoramIQ — Visual CAN diagnostics</div>
+  </footer>
+
+  <!-- Leaflet JS (placeholder map). To use Google Maps, replace the map init in scripts/main.js with Google Maps API and provide your API key. -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="scripts/main-script.js"></script>
+</body>
+</html>
