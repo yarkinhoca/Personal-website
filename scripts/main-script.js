@@ -63,3 +63,45 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     });
   }
 })();
+
+// Simulated Bluetooth connect and live CAN updates
+(function(){
+  const connectBtn = document.getElementById('connectBtn');
+  const btStatus = document.getElementById('btStatus');
+  const deviceName = document.getElementById('deviceName');
+
+  let connected = false;
+  let intervalId = null;
+
+  function startSim(){
+    intervalId = setInterval(()=>{
+      // update CAN values randomly
+      const speed = Math.round(30 + Math.random()*60);
+      const rpm = Math.round(1200 + Math.random()*2200);
+      const coolant = Math.round(75 + Math.random()*18);
+      const fuel = Math.round(20 + Math.random()*80);
+      const s = document.getElementById('canSpeed'); if (s) s.textContent = speed + ' km/h';
+      const r = document.getElementById('canRpm'); if (r) r.textContent = rpm;
+      const c = document.getElementById('canCoolant'); if (c) c.textContent = coolant + ' °C';
+      const f = document.getElementById('canFuel'); if (f) f.textContent = fuel + ' %';
+    }, 1500);
+  }
+
+  function stopSim(){ if (intervalId) clearInterval(intervalId); intervalId = null; }
+
+  if (connectBtn){
+    connectBtn.addEventListener('click', ()=>{
+      if (!connected){
+        connected = true; btStatus.textContent = 'Connected'; deviceName.textContent = 'ELM327-AB:12:34';
+        connectBtn.textContent = 'Disconnect'; connectBtn.classList.remove('outline');
+        startSim();
+      } else {
+        connected = false; btStatus.textContent = 'Disconnected'; deviceName.textContent = 'No device';
+        connectBtn.textContent = 'Connect ELM327'; connectBtn.classList.add('outline');
+        stopSim();
+        // clear values
+        ['canSpeed','canRpm','canCoolant','canFuel'].forEach(id=>{ const e=document.getElementById(id); if (e) e.textContent='—'; });
+      }
+    });
+  }
+})();

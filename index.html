@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CanoramIQ — Vehicle CAN Diagnostics</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="" crossorigin="" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -41,6 +42,11 @@
       <article class="card">
         <h3>Live CAN Stream</h3>
         <p>Receive and visualise real-time CAN parameters such as RPM, speed, coolant, and more.</p>
+        <div class="gallery">
+          <img src="https://picsum.photos/seed/can1/400/240" alt="dashboard"/>
+          <img src="https://picsum.photos/seed/can2/400/240" alt="map"/>
+          <img src="https://picsum.photos/seed/can3/400/240" alt="analysis"/>
+        </div>
       </article>
       <article class="card">
         <h3>Drive Path Overlay</h3>
@@ -61,6 +67,35 @@
         <div id="pointDetails">Click a marker on the map to see vehicle parameters.</div>
         <button id="endDriveBtn" class="btn">End Drive & Generate Score</button>
       </aside>
+    </section>
+
+    <section id="connect" class="connect-section">
+      <h2>Connect ELM327</h2>
+      <div class="connect-panel">
+        <div class="connect-row">
+          <button id="connectBtn" class="btn outline">Connect ELM327</button>
+          <div class="device-status">Status: <span id="btStatus">Disconnected</span></div>
+        </div>
+        <div class="device-name" id="deviceName">No device</div>
+
+        <table class="can-table" id="liveCAN">
+          <tr><td>Speed</td><td id="canSpeed">—</td></tr>
+          <tr><td>RPM</td><td id="canRpm">—</td></tr>
+          <tr><td>Coolant</td><td id="canCoolant">—</td></tr>
+          <tr><td>Fuel Level</td><td id="canFuel">—</td></tr>
+        </table>
+      </div>
+
+      <div class="instructions" id="instructions">
+        <h3>Quick connect guide</h3>
+        <ol>
+          <li>Enable Bluetooth on your phone and pair with the ELM327 adapter in system settings.</li>
+          <li>Open CanoramIQ and tap <strong>Connect ELM327</strong>. Grant Bluetooth & location permissions.</li>
+          <li>Once connected, start a drive session — GPS will be recorded and CAN frames will stream to the app.</li>
+          <li>At end of drive, tap <strong>End Drive</strong> to generate scores and upload to the cloud.</li>
+        </ol>
+        <p class="tip">Tip: Use a genuine ELM327 v1.5+ adapter for best compatibility. If you see pairing issues, restart Bluetooth and try again.</p>
+      </div>
     </section>
 
     <section id="scores" class="scores">
