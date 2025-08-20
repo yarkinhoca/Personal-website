@@ -7,3 +7,43 @@ body {
 h1 {
   color: #007acc;
 }
+
+/* Layout helpers */
+.container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+.site-header { background: #fff; border-bottom: 1px solid #e6e6e6; position: sticky; top: 0; z-index: 20; }
+.header-inner { display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+.logo { font-weight:700; color:#007acc; margin:0; }
+.main-nav a { margin-left:18px; color:#333; text-decoration:none; }
+
+/* Hero slider */
+.hero { background: linear-gradient(90deg,#ffffff,#f7fbff); padding:40px 0; }
+.slider { position:relative; height:160px; overflow:hidden; border-radius:8px; border:1px solid #e3e8ef; background:#fff; }
+.slide { position:absolute; inset:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; padding:24px; opacity:0; transform:translateX(20px); transition:all .6s ease; }
+.slide.active { opacity:1; transform:none; }
+.slide h2 { margin:0 0 8px 0; color:#023e8a; }
+
+/* Cards */
+.cards { display:flex; gap:18px; margin:28px 0; }
+.card { background:#fff; padding:18px; border-radius:8px; box-shadow:0 2px 6px rgba(20,30,50,0.05); flex:1; }
+
+/* Map section */
+.map-section { display:flex; gap:20px; align-items:flex-start; }
+.map-column { flex:2; }
+.map { height:360px; border-radius:8px; border:1px solid #ddd; }
+.panel { flex:1; background:#fff; padding:16px; border-radius:8px; box-shadow:0 2px 6px rgba(20,30,50,0.05); }
+.btn { display:inline-block; margin-top:12px; padding:10px 14px; background:#007acc; color:#fff; border-radius:6px; border:none; cursor:pointer; }
+
+/* Scores */
+.scores { margin:24px 0 80px; }
+.score-cards { display:flex; gap:12px; }
+.score-card { background:#fff; padding:16px; border-radius:8px; flex:1; text-align:center; }
+.score-card h4 { margin:0 0 8px 0; }
+.note { color:#666; font-size:0.95rem; }
+
+.site-footer { padding:18px 0; text-align:center; color:#666; }
+
+/* Responsive */
+@media (max-width:900px){
+  .cards{flex-direction:column}
+  .map-section{flex-direction:column}
+}
