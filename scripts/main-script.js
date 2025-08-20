@@ -24,6 +24,11 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     maxZoom:19,
     attribution:'© OpenStreetMap contributors'
   }).addTo(map);
+  // make a live polyline for the drive route and expose map objects for other scopes
+  const route = L.polyline(points.map(p=>[p.lat,p.lng]), {color:'#007acc'}).addTo(map);
+  window.canoram = window.canoram || {};
+  window.canoram.map = map;
+  window.canoram.route = route;
 
   // Simulated CAN data points
   const points = [
@@ -74,16 +79,56 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   let intervalId = null;
 
   function startSim(){
+    // initialize simulation anchors
+    window.canoram._sim = window.canoram._sim || {};
+    const sim = window.canoram._sim;
+    if (!sim.lat) { sim.lat = 37.773972; sim.lng = -122.431297; }
+    if (!sim.initialFuel) { sim.initialFuel = 65 + Math.round(Math.random()*30); }
+    if (!window.canoram.session) window.canoram.session = [];
+
     intervalId = setInterval(()=>{
-      // update CAN values randomly
-      const speed = Math.round(30 + Math.random()*60);
-      const rpm = Math.round(1200 + Math.random()*2200);
-      const coolant = Math.round(75 + Math.random()*18);
-      const fuel = Math.round(20 + Math.random()*80);
+      // small GPS drift to simulate movement
+      sim.lat += (Math.random() - 0.5) * 0.0018;
+      sim.lng += (Math.random() - 0.5) * 0.0018;
+
+      // realistic CAN values with relationships
+      const baseSpeed = 20 + Math.abs(Math.sin(Date.now()/60000) * 60);
+      const noise = (Math.random() - 0.5) * 8;
+      const speed = Math.max(0, Math.round(baseSpeed + noise));
+      const rpm = Math.max(600, Math.round(800 + speed * 28 + (Math.random() - 0.5) * 300));
+      const coolant = Math.round(75 + Math.random() * 18);
+
+      // fuel drains slowly over samples
+      const usedSoFar = window.canoram.session.length * (0.02 + Math.random() * 0.06);
+      const fuel = Math.max(1, Math.round(sim.initialFuel - usedSoFar));
+
+      const throttle = Math.round(Math.min(100, Math.max(0, (speed / 120) * 100 + (Math.random()-0.5)*20)));
+
+      // record sample
+      const sample = {
+        ts: Date.now(), lat: sim.lat, lng: sim.lng,
+        speed, rpm, coolant, fuel, throttle
+      };
+      window.canoram.session.push(sample);
+
+      // update UI readouts
       const s = document.getElementById('canSpeed'); if (s) s.textContent = speed + ' km/h';
       const r = document.getElementById('canRpm'); if (r) r.textContent = rpm;
       const c = document.getElementById('canCoolant'); if (c) c.textContent = coolant + ' °C';
       const f = document.getElementById('canFuel'); if (f) f.textContent = fuel + ' %';
+
+      // add a small map marker and extend the route polyline
+      if (window.canoram.map && window.canoram.route){
+        const latlng = [sim.lat, sim.lng];
+        // add a subtle marker every 3 samples
+        if (window.canoram.session.length % 3 === 0){
+          const mk = L.circleMarker(latlng, {radius:4, color:'#0b2545', fillOpacity:0.9}).addTo(window.canoram.map);
+          mk.bindPopup(`Speed: ${speed} km/h<br>RPM: ${rpm}`).on('click', ()=> mk.openPopup());
+        }
+        window.canoram.route.addLatLng(latlng);
+        // pan map slowly to follow
+        if (window.canoram.session.length % 4 === 0) window.canoram.map.panTo(latlng);
+      }
     }, 1500);
   }
 
