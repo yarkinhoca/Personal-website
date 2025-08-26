@@ -67,10 +67,12 @@ img,svg{display:block;max-width:100%}
 .dot--blu{background:#38bdf8}
 .dot--grn{background:#22c55e}
 .dot--ylw{background:#f59e0b}
-.screen-map{position:absolute;inset:40px 0 120px 0;background:radial-gradient(600px 300px at 30% 20%, rgba(56,189,248,.08), transparent 50%),linear-gradient(180deg, rgba(2,6,23,.8), rgba(2,6,23,.2)),url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22><defs><pattern id=%22g%22 width=%2240%22 height=%2240%22 patternUnits=%22userSpaceOnUse%22><path d=%22M40 0H0v40%22 fill=%22none%22 stroke=%22%231f2937%22 stroke-width=%221%22/></pattern></defs><rect width=%22400%22 height=%22400%22 fill=%22%230b1220%22/><rect width=%22400%22 height=%22400%22 fill=%22url(%23g)%22/></svg>');background-size:cover}
-.map-pin{position:absolute;width:10px;height:10px;border-radius:999px;background:#a5f3fc;box-shadow:0 0 0 4px rgba(165,243,252,.2)}
-.pin--outlier{background:var(--danger);box-shadow:0 0 0 5px rgba(239,68,68,.25)}
-.polyline{position:absolute;left:15%;top:30%;width:70%;height:40%;border:1.5px dashed rgba(148,163,184,.25);border-radius:20px}
+.screen-map{position:absolute;inset:40px 0 120px 0}
+#drive-map{position:absolute;inset:0;border-bottom:1px solid rgba(148,163,184,.1)}
+/* Dark-tune Leaflet defaults for the phone */
+.leaflet-container{background:#0b1220}
+.leaflet-tile{filter:contrast(1.05) saturate(1.05)}
+.leaflet-control-container .leaflet-control{filter:brightness(.95)}
 .screen-stats{position:absolute;left:0;right:0;bottom:0;height:120px;background:rgba(2,6,23,.7);border-top:1px solid rgba(148,163,184,.15);display:grid;grid-template-columns:repeat(3,1fr)}
 .stat{display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid rgba(148,163,184,.12)}
 .stat:last-child{border-right:0}
