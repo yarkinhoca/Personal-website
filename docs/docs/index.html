@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CanoramIQ — OBD telematics, anomaly detection, and GPS-aware insights</title>
+    <meta name="description" content="CanoramIQ logs OBD data over Bluetooth each drive, tags it with GPS and timestamps, and uses Isolation Forest to surface outliers and KPIs—engine health, fuel consumption, and driver performance—on an interactive map." />
+    <link rel="canonical" href="https://www.canoramiq.com/" />
+    <meta property="og:title" content="CanoramIQ — OBD telematics, anomaly detection, and GPS-aware insights" />
+    <meta property="og:description" content="Log OBD data per drive cycle, visualize metrics on the map, and detect outliers with Isolation Forest to monitor engine health and performance." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.canoramiq.com/" />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#" aria-label="CanoramIQ home">
+          <svg class="logo" width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" x2="48" y1="0" y2="48" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#06b6d4" />
+                <stop offset="1" stop-color="#22d3ee" />
+              </linearGradient>
+            </defs>
+            <rect x="4" y="8" width="40" height="28" rx="6" stroke="url(#g)" stroke-width="4" />
+            <circle cx="16" cy="22" r="3" fill="#22d3ee" />
+            <circle cx="32" cy="22" r="3" fill="#22d3ee" />
+            <path d="M12 32c3-3 7-5 12-5s9 2 12 5" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <span>CanoramIQ</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+            <span class="sr-only">Menu</span>
+            <div class="hamburger" aria-hidden="true"></div>
+          </button>
+          <ul id="nav-menu" class="nav-list">
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#kpis">KPIs</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a class="btn btn-small" href="#cta">Get updates</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+      <section class="section hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <h1>GPS-aware OBD insights and anomaly detection</h1>
+            <p class="lead">CanoramIQ logs every drive—from ignition on to off—over Bluetooth. We pair OBD data with timestamps and GPS, then use Isolation Forest to flag outliers and generate KPIs so you can monitor engine health, fuel economy, and driver performance on a map.</p>
+            <div class="cta">
+              <a class="btn btn-primary" href="#cta">Join the beta</a>
+              <a class="btn btn-ghost" href="#how">See how it works</a>
+            </div>
+            <ul class="hero-highlights">
+              <li>OBD over Bluetooth</li>
+              <li>Drive-cycle aware logging</li>
+              <li>Map-centric analysis</li>
+              <li>Isolation Forest outliers</li>
+            </ul>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="screen-header">
+                  <span class="dot dot--blu"></span>
+                  <span class="dot dot--grn"></span>
+                  <span class="dot dot--ylw"></span>
+                </div>
+                <div class="screen-map">
+                  <div class="map-pin pin--normal" style="left:20%;top:40%"></div>
+                  <div class="map-pin pin--normal" style="left:70%;top:25%"></div>
+                  <div class="map-pin pin--outlier" style="left:50%;top:65%" title="Outlier detected"></div>
+                  <div class="polyline"></div>
+                </div>
+                <div class="screen-stats">
+                  <div class="stat">
+                    <span class="stat-label">Fuel</span>
+                    <span class="stat-value">6.8 L/100km</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-label">Coolant</span>
+                    <span class="stat-value">89 °C</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-label">Score</span>
+                    <span class="stat-value">92</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how" class="section alt">
+        <div class="container">
+          <h2>How it works</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-icon" aria-hidden="true">🔌</div>
+              <h3>Connect</h3>
+              <p>Pair your OBD-II adapter over Bluetooth. CanoramIQ auto-detects ignition on/off to start and stop logging for each drive cycle.</p>
+            </div>
+            <div class="step">
+              <div class="step-icon" aria-hidden="true">🗺️</div>
+              <h3>Log</h3>
+              <p>We record OBD PIDs with precise timestamps and GPS coordinates. Your raw data is exportable as CSV for every trip.</p>
+            </div>
+            <div class="step">
+              <div class="step-icon" aria-hidden="true">🌲</div>
+              <h3>Detect</h3>
+              <p>An Isolation Forest model highlights outliers across a large reference dataset to surface anomalies and patterns.</p>
+            </div>
+            <div class="step">
+              <div class="step-icon" aria-hidden="true">📊</div>
+              <h3>Decide</h3>
+              <p>KPIs and metrics track engine health, fuel consumption, and driver performance. Tap any point on the map to inspect local signals.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section id="features" class="section">
+        <div class="container">
+          <h2>Built for trusted diagnostics</h2>
+          <div class="cards">
+            <article class="card">
+              <h3>Drive-cycle aware</h3>
+              <p>Logs begin at ignition on and end at ignition off, ensuring clean trip segmentation and consistent analytics.</p>
+            </article>
+            <article class="card">
+              <h3>CSV you control</h3>
+              <p>Export raw trip data as CSV, with timestamps and GPS coordinates—ready for your own analysis pipelines.</p>
+            </article>
+            <article class="card">
+              <h3>Map-first UX</h3>
+              <p>Press any location along your route to review OBD values at that moment and compare against baselines.</p>
+            </article>
+            <article class="card">
+              <h3>Anomaly detection</h3>
+              <p>Isolation Forest on a large reference dataset spots unusual behavior so you can intervene proactively.</p>
+            </article>
+            <article class="card">
+              <h3>Actionable KPIs</h3>
+              <p>From fuel economy to thermal stability and throttle smoothness, track what matters for longevity and cost.</p>
+            </article>
+            <article class="card">
+              <h3>Privacy by design</h3>
+              <p>Your data stays on your device unless you choose to export or sync. No surprise uploads.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPIs -->
+      <section id="kpis" class="section alt">
+        <div class="container">
+          <h2>Example KPIs and metrics</h2>
+          <div class="kpis">
+            <div class="kpi"><span class="kpi-label">Fuel economy</span><span class="kpi-value">6.8 L/100km</span></div>
+            <div class="kpi"><span class="kpi-label">Engine health</span><span class="kpi-value">92/100</span></div>
+            <div class="kpi"><span class="kpi-label">Outlier rate</span><span class="kpi-value">0.7%</span></div>
+            <div class="kpi"><span class="kpi-label">Throttle smoothness</span><span class="kpi-value">88/100</span></div>
+            <div class="kpi"><span class="kpi-label">Coolant stability</span><span class="kpi-value">95/100</span></div>
+            <div class="kpi"><span class="kpi-label">Idle variance</span><span class="kpi-value">Low</span></div>
+          </div>
+          <p class="muted">Metrics vary by vehicle and dataset; outlier scoring via Isolation Forest adapts to your conditions.</p>
+        </div>
+      </section>
+
+      <!-- CTA / Beta sign-up -->
+      <section id="cta" class="section cta">
+        <div class="container cta-inner">
+          <div class="cta-copy">
+            <h2>Be the first to try CanoramIQ</h2>
+            <p>We're preparing an invite-only beta. Leave your email and we’ll notify you when your device and region are supported.</p>
+          </div>
+          <form class="signup" name="signup" method="post" data-enhanced>
+            <label class="sr-only" for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            <button class="btn btn-primary" type="submit">Request invite</button>
+            <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="section">
+        <div class="container">
+          <h2>Frequently asked</h2>
+          <details>
+            <summary>Which OBD-II adapters are supported?</summary>
+            <p>Bluetooth ELM327-compatible adapters with stable sampling rates. We'll publish a tested list for iOS and Android during beta.</p>
+          </details>
+          <details>
+            <summary>How do you detect outliers?</summary>
+            <p>We train an Isolation Forest model on a large reference dataset and adapt it with your vehicle’s statistics to flag unusual points and segments.</p>
+          </details>
+          <details>
+            <summary>Where is my data stored?</summary>
+            <p>On-device by default. CSV exports are under your control. Optional cloud sync will be opt-in.</p>
+          </details>
+          <details>
+            <summary>Do you support diesel and hybrids?</summary>
+            <p>Yes, but available PIDs vary by make/model. During beta we’ll focus on the most common signals and expand coverage.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <span class="brand-mini">CanoramIQ</span>
+          <p class="muted">OBD telematics with GPS-aware anomaly detection.</p>
+        </div>
+        <nav aria-label="Footer">
+          <ul>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#kpis">KPIs</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </nav>
+        <div class="legal muted">
+          <span>© <span id="year"></span> CanoramIQ</span>
+          <span>•</span>
+          <a href="#" class="link-muted">Privacy</a>
+          <span>•</span>
+          <a href="#" class="link-muted">Terms</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./scripts/main.js" defer></script>
+  </body>
+  </html>
