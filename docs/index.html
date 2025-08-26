@@ -15,6 +15,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/main.css" />
+    <!-- Leaflet CSS for real map rendering inside the phone UI -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -78,10 +85,8 @@
                   <span class="dot dot--ylw"></span>
                 </div>
                 <div class="screen-map">
-                  <div class="map-pin pin--normal" style="left:20%;top:40%"></div>
-                  <div class="map-pin pin--normal" style="left:70%;top:25%"></div>
-                  <div class="map-pin pin--outlier" style="left:50%;top:65%" title="Outlier detected"></div>
-                  <div class="polyline"></div>
+                  <!-- Real map container; Leaflet will render here -->
+                  <div id="drive-map" role="img" aria-label="Map view of a sample drive cycle with outliers"></div>
                 </div>
                 <div class="screen-stats">
                   <div class="stat">
@@ -245,6 +250,13 @@
       </div>
     </footer>
 
+    <!-- Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+      defer
+    ></script>
     <script src="./scripts/main.js" defer></script>
   </body>
   </html>
