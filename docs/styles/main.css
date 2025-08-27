@@ -61,7 +61,71 @@ img,svg{display:block;max-width:100%}
 
 /* Phone art */
 .phone{display:flex;justify-content:center}
-.phone .phone-screen{width:280px;height:560px;border-radius:32px;background:linear-gradient(180deg,#0b1220,#0e1627);border:1px solid rgba(148,163,184,.2);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.phone .phone-screen {
+  width: 280px;
+  height: 560px;
+  border-radius: 48px;
+  background: linear-gradient(180deg,#0b1220 80%,#0e1627);
+  border: 2.5px solid #222;
+  box-shadow: 0 12px 36px rgba(0,0,0,.45), 0 0 0 8px #222;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Notch */
+.phone .phone-screen::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 12px;
+  background: #222;
+  border-radius: 8px;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+}
+
+/* Speaker dot in notch */
+.phone .phone-screen::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 4px;
+  background: #444;
+  border-radius: 2px;
+  z-index: 3;
+}
+
+/* Side buttons */
+.phone::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 80px;
+  width: 4px;
+  height: 40px;
+  background: #222;
+  border-radius: 2px;
+  box-shadow: 0 0 4px #111;
+  z-index: 10;
+}
+.phone::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 140px;
+  width: 4px;
+  height: 24px;
+  background: #222;
+  border-radius: 2px;
+  box-shadow: 0 0 4px #111;
+  z-index: 10;
+}
 .screen-header{height:40px;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid rgba(148,163,184,.1);background:rgba(2,6,23,.5)}
 .dot{width:8px;height:8px;border-radius:999px;display:inline-block}
 .dot--blu{background:#38bdf8}
