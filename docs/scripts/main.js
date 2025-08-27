@@ -58,65 +58,43 @@
     }).addTo(map);
 
     // Sample CAN data points (20)
-    const canDataPoints = [
-      {
-        lat: 37.7749, lng: -122.4194, timestamp: '2025-08-27T10:00:00Z', speed: 42, steering: 2, rpm: 1800, load: 35, fuel: 7.2, coolant: 88, throttle: 18, intakeTemp: 32, oilTemp: 95, maf: 2.1, baro: 101, voltage: 13.8, gear: 3, brake: 0, accel: 0.12, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7751, lng: -122.4192, timestamp: '2025-08-27T10:01:00Z', speed: 45, steering: 3, rpm: 1900, load: 38, fuel: 7.0, coolant: 89, throttle: 20, intakeTemp: 33, oilTemp: 96, maf: 2.2, baro: 101, voltage: 13.7, gear: 3, brake: 0, accel: 0.13, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7753, lng: -122.4190, timestamp: '2025-08-27T10:02:00Z', speed: 48, steering: 1, rpm: 2000, load: 40, fuel: 6.8, coolant: 90, throttle: 22, intakeTemp: 34, oilTemp: 97, maf: 2.3, baro: 101, voltage: 13.7, gear: 4, brake: 0, accel: 0.14, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7755, lng: -122.4188, timestamp: '2025-08-27T10:03:00Z', speed: 50, steering: 0, rpm: 2100, load: 42, fuel: 6.6, coolant: 91, throttle: 24, intakeTemp: 35, oilTemp: 98, maf: 2.4, baro: 101, voltage: 13.6, gear: 4, brake: 0, accel: 0.15, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7757, lng: -122.4186, timestamp: '2025-08-27T10:04:00Z', speed: 52, steering: -1, rpm: 2200, load: 44, fuel: 6.4, coolant: 92, throttle: 26, intakeTemp: 36, oilTemp: 99, maf: 2.5, baro: 101, voltage: 13.6, gear: 4, brake: 0, accel: 0.16, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7759, lng: -122.4184, timestamp: '2025-08-27T10:05:00Z', speed: 54, steering: -2, rpm: 2300, load: 46, fuel: 6.2, coolant: 93, throttle: 28, intakeTemp: 37, oilTemp: 100, maf: 2.6, baro: 101, voltage: 13.5, gear: 5, brake: 0, accel: 0.17, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7761, lng: -122.4182, timestamp: '2025-08-27T10:06:00Z', speed: 56, steering: -3, rpm: 2400, load: 48, fuel: 6.0, coolant: 94, throttle: 30, intakeTemp: 38, oilTemp: 101, maf: 2.7, baro: 101, voltage: 13.5, gear: 5, brake: 0, accel: 0.18, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7763, lng: -122.4180, timestamp: '2025-08-27T10:07:00Z', speed: 58, steering: -4, rpm: 2500, load: 50, fuel: 5.8, coolant: 95, throttle: 32, intakeTemp: 39, oilTemp: 102, maf: 2.8, baro: 101, voltage: 13.4, gear: 5, brake: 0, accel: 0.19, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7765, lng: -122.4178, timestamp: '2025-08-27T10:08:00Z', speed: 60, steering: -5, rpm: 2600, load: 52, fuel: 5.6, coolant: 96, throttle: 34, intakeTemp: 40, oilTemp: 103, maf: 2.9, baro: 101, voltage: 13.4, gear: 6, brake: 0, accel: 0.20, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7767, lng: -122.4176, timestamp: '2025-08-27T10:09:00Z', speed: 62, steering: -6, rpm: 2700, load: 54, fuel: 5.4, coolant: 97, throttle: 36, intakeTemp: 41, oilTemp: 104, maf: 3.0, baro: 101, voltage: 13.3, gear: 6, brake: 0, accel: 0.21, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7769, lng: -122.4174, timestamp: '2025-08-27T10:10:00Z', speed: 64, steering: -7, rpm: 2800, load: 56, fuel: 5.2, coolant: 98, throttle: 38, intakeTemp: 42, oilTemp: 105, maf: 3.1, baro: 101, voltage: 13.3, gear: 6, brake: 0, accel: 0.22, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7771, lng: -122.4172, timestamp: '2025-08-27T10:11:00Z', speed: 66, steering: -8, rpm: 2900, load: 58, fuel: 5.0, coolant: 99, throttle: 40, intakeTemp: 43, oilTemp: 106, maf: 3.2, baro: 101, voltage: 13.2, gear: 6, brake: 0, accel: 0.23, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7773, lng: -122.4170, timestamp: '2025-08-27T10:12:00Z', speed: 68, steering: -9, rpm: 3000, load: 60, fuel: 4.8, coolant: 100, throttle: 42, intakeTemp: 44, oilTemp: 107, maf: 3.3, baro: 101, voltage: 13.2, gear: 6, brake: 0, accel: 0.24, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7775, lng: -122.4168, timestamp: '2025-08-27T10:13:00Z', speed: 70, steering: -10, rpm: 3100, load: 62, fuel: 4.6, coolant: 101, throttle: 44, intakeTemp: 45, oilTemp: 108, maf: 3.4, baro: 101, voltage: 13.1, gear: 6, brake: 0, accel: 0.25, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7777, lng: -122.4166, timestamp: '2025-08-27T10:14:00Z', speed: 72, steering: -11, rpm: 3200, load: 64, fuel: 4.4, coolant: 102, throttle: 46, intakeTemp: 46, oilTemp: 109, maf: 3.5, baro: 101, voltage: 13.1, gear: 6, brake: 0, accel: 0.26, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7779, lng: -122.4164, timestamp: '2025-08-27T10:15:00Z', speed: 74, steering: -12, rpm: 3300, load: 66, fuel: 4.2, coolant: 103, throttle: 48, intakeTemp: 47, oilTemp: 110, maf: 3.6, baro: 101, voltage: 13.0, gear: 6, brake: 0, accel: 0.27, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7781, lng: -122.4162, timestamp: '2025-08-27T10:16:00Z', speed: 76, steering: -13, rpm: 3400, load: 68, fuel: 4.0, coolant: 104, throttle: 50, intakeTemp: 48, oilTemp: 111, maf: 3.7, baro: 101, voltage: 13.0, gear: 6, brake: 0, accel: 0.28, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7783, lng: -122.4160, timestamp: '2025-08-27T10:17:00Z', speed: 78, steering: -14, rpm: 3500, load: 70, fuel: 3.8, coolant: 105, throttle: 52, intakeTemp: 49, oilTemp: 112, maf: 3.8, baro: 101, voltage: 12.9, gear: 6, brake: 0, accel: 0.29, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      },
-      {
-        lat: 37.7785, lng: -122.4158, timestamp: '2025-08-27T10:18:00Z', speed: 80, steering: -15, rpm: 3600, load: 72, fuel: 3.6, coolant: 106, throttle: 54, intakeTemp: 50, oilTemp: 113, maf: 3.9, baro: 101, voltage: 12.9, gear: 6, brake: 0, accel: 0.30, tirePressFL: 32, tirePressFR: 32, tirePressRL: 30, tirePressRR: 30
-      }
-    ];
+    // Generate a realistic, winding drive cycle with 40 CAN data points
+    const canDataPoints = [];
+    const startLat = 37.7749;
+    const startLng = -122.4194;
+    let lat = startLat;
+    let lng = startLng;
+    let timestamp = new Date('2025-08-27T10:00:00Z');
+    for (let i = 0; i < 40; i++) {
+      // Simulate a winding route using sine/cosine for latitude/longitude
+      lat += Math.sin(i / 6) * 0.0015 + (Math.random() - 0.5) * 0.0007;
+      lng += Math.cos(i / 8) * 0.002 + (Math.random() - 0.5) * 0.0007;
+      timestamp = new Date(timestamp.getTime() + 60 * 1000); // 1 min increments
+      canDataPoints.push({
+        lat,
+        lng,
+        timestamp: timestamp.toISOString(),
+        speed: 40 + Math.round(Math.sin(i / 5) * 12 + Math.random() * 4),
+        steering: Math.round(Math.sin(i / 3) * 10),
+        rpm: 1800 + Math.round(Math.sin(i / 7) * 1200 + Math.random() * 100),
+        load: 30 + Math.round(Math.cos(i / 4) * 30 + Math.random() * 5),
+        fuel: +(7.5 - i * 0.08 + Math.random() * 0.2).toFixed(2),
+        coolant: 85 + Math.round(Math.sin(i / 6) * 10 + Math.random() * 2),
+        throttle: 15 + Math.round(Math.sin(i / 5) * 20 + Math.random() * 3),
+        intakeTemp: 30 + Math.round(Math.sin(i / 8) * 6 + Math.random() * 2),
+        oilTemp: 90 + Math.round(Math.sin(i / 9) * 15 + Math.random() * 2),
+        maf: +(2.0 + Math.sin(i / 7) * 1.5 + Math.random() * 0.2).toFixed(2),
+        baro: 101,
+        voltage: +(13.5 + Math.sin(i / 10) * 0.5 + Math.random() * 0.1).toFixed(2),
+        gear: Math.min(6, Math.max(1, Math.floor(i / 7) + 1)),
+        brake: i % 10 === 0 ? 1 : 0,
+        accel: +(0.10 + Math.sin(i / 6) * 0.15 + Math.random() * 0.02).toFixed(2),
+        tirePressFL: 32,
+        tirePressFR: 32,
+        tirePressRL: 30,
+        tirePressRR: 30
+      });
+    }
 
     // Draw route
     const route = L.polyline(canDataPoints.map(p => [p.lat, p.lng]), { color: '#22d3ee', weight: 3, opacity: 0.9 }).addTo(map);
