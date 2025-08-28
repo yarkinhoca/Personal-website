@@ -69,28 +69,40 @@
           <div class="hero-art" aria-hidden="true">
             <div class="phone" style="margin:0 auto;display:flex;flex-direction:column;align-items:center;max-width:320px;">
               <div class="phone-screen">
-                <div class="screen-header">
-                  <span class="dot dot--blu"></span>
-                  <span class="dot dot--grn"></span>
-                  <span class="dot dot--ylw"></span>
-                </div>
-                <div class="screen-map">
-                  <!-- Real map container; Leaflet will render here -->
-                  <div id="drive-map" role="img" aria-label="Map view of a sample drive cycle with outliers"></div>
-                </div>
-                <div class="screen-stats">
-                  <div class="stat">
-                    <span class="stat-label">Fuel</span>
-                    <span class="stat-value">6.8 L/100km</span>
+                <div class="phone-scroll-container">
+                  <div class="screen-header">
+                    <span class="dot dot--blu"></span>
+                    <span class="dot dot--grn"></span>
+                    <span class="dot dot--ylw"></span>
                   </div>
-                  <div class="stat">
-                    <span class="stat-label">Coolant</span>
-                    <span class="stat-value">89 °C</span>
+                  <div class="screen-panel screen-map-panel">
+                    <div id="drive-map" role="img" aria-label="Map view of a sample drive cycle with outliers"></div>
                   </div>
-                  <div class="stat">
-                    <span class="stat-label">Score</span>
-                    <span class="stat-value">92</span>
+                  <div class="screen-panel screen-kpi-panel">
+                    <div class="screen-stats">
+                      <div class="stat">
+                        <span class="stat-label">Fuel</span>
+                        <span class="stat-value">6.8 L/100km</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-label">Coolant</span>
+                        <span class="stat-value">89 °C</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-label">Score</span>
+                        <span class="stat-value">92</span>
+                      </div>
+                    </div>
                   </div>
+                  <div class="screen-panel screen-elm-panel">
+                    <div class="elm-status">
+                      <span class="elm-title">ELM327 Bluetooth</span>
+                      <span class="elm-chip">🔵</span>
+                      <span class="elm-conn">Status: <span class="elm-conn-status">Connected</span></span>
+                      <span class="elm-device">Device: ELM327-OBDII</span>
+                    </div>
+                  </div>
+                  <!-- Add more panels here as needed -->
                 </div>
               </div>
               <div class="phone-info-block" style="margin-top:14px;max-width:220px;background:rgba(15,23,42,0.6);border-radius:8px;padding:7px 10px;box-shadow:0 1px 4px rgba(0,0,0,.06);color:#cbd5e1;font-size:13px;font-weight:500;text-align:center;">
