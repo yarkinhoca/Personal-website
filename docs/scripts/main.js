@@ -64,41 +64,39 @@
     // Realistic, winding drive cycle in Istanbul (loop with curves and turns)
     // Real Istanbul drive cycle: Sultanahmet > Fatih > Golden Horn > Beyoğlu > Şişli > Beşiktaş > Loop
     const routeCoords = [
-      [41.0082, 28.9784], // Sultanahmet
-      [41.0095, 28.9750], // Hagia Sophia
-      [41.0120, 28.9680], // Fatih
-      [41.0170, 28.9630], // Unkapanı
-      [41.0210, 28.9600], // Golden Horn Bridge
-      [41.0250, 28.9740], // Kasımpaşa
-      [41.0300, 28.9850], // Beyoğlu
-      [41.0350, 28.9900], // Taksim
-      [41.0400, 28.9950], // Şişli
-      [41.0450, 29.0000], // Mecidiyeköy
-      [41.0480, 29.0100], // Beşiktaş
-      [41.0450, 29.0200], // Ortaköy
-      [41.0400, 29.0250], // Arnavutköy
-      [41.0350, 29.0300], // Bebek
-      [41.0300, 29.0350], // Rumelihisarı
-      [41.0250, 29.0400], // Emirgan
-      [41.0200, 29.0450], // İstinye
-      [41.0150, 29.0500], // Tarabya
-      [41.0120, 29.0550], // Sarıyer
-      [41.0170, 29.0600], // Maslak
-      [41.0220, 29.0650], // Ayazağa
-      [41.0270, 29.0700], // Hacıosman
-      [41.0320, 29.0750], // Bahçeköy
-      [41.0370, 29.0800], // Belgrad Forest
-      [41.0420, 29.0850], // Kemerburgaz
-      [41.0470, 29.0900], // Göktürk
-      [41.0520, 29.0950], // Hasdal
-      [41.0570, 29.1000], // Kağıthane
-      [41.0620, 29.1050], // Alibeyköy
-      [41.0670, 29.1100], // Eyüp
-      [41.0720, 29.1150], // Sultangazi
-      [41.0770, 29.1200], // Gaziosmanpaşa
-      [41.0820, 29.1250], // Bayrampaşa
-      [41.0840, 29.1280], // Loop back
-      [41.0082, 28.9784] // Sultanahmet
+  [41.0082, 28.9784], // Sultanahmet
+  [41.0095, 28.9750], // Hagia Sophia
+  [41.0120, 28.9680], // Fatih
+  [41.0170, 28.9630], // Unkapanı
+  [41.0210, 28.9600], // Golden Horn Bridge
+  [41.0250, 28.9740], // Kasımpaşa
+  [41.0300, 28.9850], // Beyoğlu
+  [41.0350, 28.9900], // Taksim
+  [41.0400, 28.9950], // Şişli
+  [41.0450, 29.0000], // Mecidiyeköy
+  [41.0480, 29.0100], // Beşiktaş
+  [41.0457, 29.0220], // Ortaköy (Bosphorus Bridge entrance)
+  [41.0459, 29.0272], // Bosphorus Bridge midpoint (15 July Martyrs Bridge)
+  [41.0456, 29.0330], // Asian side exit (Üsküdar)
+  [41.0400, 29.0400], // Acıbadem
+  [41.0350, 29.0450], // Kadıköy
+  [41.0300, 29.0500], // Göztepe
+  [41.0250, 29.0550], // Bostancı
+  [41.0200, 29.0600], // Ataşehir
+  [41.0150, 29.0650], // Kozyatağı
+  [41.0120, 29.0700], // Maltepe
+  [41.0170, 29.0750], // Kartal
+  [41.0220, 29.0800], // Pendik
+  [41.0270, 29.0850], // Tuzla
+  [41.0320, 29.0900], // Sabiha Gökçen
+  [41.0370, 29.0950], // Kurtköy
+  [41.0420, 29.1000], // Sultanbeyli
+  [41.0470, 29.1050], // Çekmeköy
+  [41.0520, 29.1100], // Ümraniye
+  [41.0570, 29.1150], // Ataşehir
+  [41.0620, 29.1200], // Üsküdar
+  [41.0670, 29.1250], // Loop back
+  [41.0082, 28.9784] // Sultanahmet
     ];
     // Generate CAN data for each coordinate
     const canDataPoints = [];
