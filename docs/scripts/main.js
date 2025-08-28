@@ -58,37 +58,53 @@
     }).addTo(map);
 
     // Sample CAN data points (20)
-    // Generate a realistic, winding drive cycle with 40 CAN data points
+    // Realistic 15 km drive cycle on US-101 in San Francisco (approximate)
+    // Coordinates sampled along US-101 from SF to SFO
+    const routeCoords = [
+      [37.7749, -122.4194], [37.7765, -122.4170], [37.7780, -122.4145], [37.7795, -122.4120],
+      [37.7810, -122.4095], [37.7825, -122.4070], [37.7840, -122.4045], [37.7855, -122.4020],
+      [37.7870, -122.3995], [37.7885, -122.3970], [37.7900, -122.3945], [37.7915, -122.3920],
+      [37.7930, -122.3895], [37.7945, -122.3870], [37.7960, -122.3845], [37.7975, -122.3820],
+      [37.7990, -122.3795], [37.8005, -122.3770], [37.8020, -122.3745], [37.8035, -122.3720],
+      [37.8050, -122.3695], [37.8065, -122.3670], [37.8080, -122.3645], [37.8095, -122.3620],
+      [37.8110, -122.3595], [37.8125, -122.3570], [37.8140, -122.3545], [37.8155, -122.3520],
+      [37.8170, -122.3495], [37.8185, -122.3470], [37.8200, -122.3445], [37.8215, -122.3420],
+      [37.8230, -122.3395], [37.8245, -122.3370], [37.8260, -122.3345], [37.8275, -122.3320],
+      [37.8290, -122.3295], [37.8305, -122.3270], [37.8320, -122.3245], [37.8335, -122.3220],
+      [37.8350, -122.3195], [37.8365, -122.3170], [37.8380, -122.3145], [37.8395, -122.3120],
+      [37.8410, -122.3095], [37.8425, -122.3070], [37.8440, -122.3045], [37.8455, -122.3020],
+      [37.8470, -122.2995], [37.8485, -122.2970], [37.8500, -122.2945], [37.8515, -122.2920],
+      [37.8530, -122.2895], [37.8545, -122.2870], [37.8560, -122.2845], [37.8575, -122.2820],
+      [37.8590, -122.2795], [37.8605, -122.2770], [37.8620, -122.2745], [37.8635, -122.2720],
+      [37.8650, -122.2695], [37.8665, -122.2670], [37.8680, -122.2645], [37.8695, -122.2620],
+      [37.8710, -122.2595], [37.8725, -122.2570], [37.8740, -122.2545], [37.8755, -122.2520],
+      [37.8770, -122.2495]
+    ];
+    // Generate CAN data for each coordinate
     const canDataPoints = [];
-    const startLat = 37.7749;
-    const startLng = -122.4194;
-    let lat = startLat;
-    let lng = startLng;
     let timestamp = new Date('2025-08-27T10:00:00Z');
-    for (let i = 0; i < 40; i++) {
-      // Simulate a winding route using sine/cosine for latitude/longitude
-      lat += Math.sin(i / 6) * 0.0015 + (Math.random() - 0.5) * 0.0007;
-      lng += Math.cos(i / 8) * 0.002 + (Math.random() - 0.5) * 0.0007;
+    for (let i = 0; i < routeCoords.length; i++) {
+      const [lat, lng] = routeCoords[i];
       timestamp = new Date(timestamp.getTime() + 60 * 1000); // 1 min increments
       canDataPoints.push({
         lat,
         lng,
         timestamp: timestamp.toISOString(),
-        speed: 40 + Math.round(Math.sin(i / 5) * 12 + Math.random() * 4),
-        steering: Math.round(Math.sin(i / 3) * 10),
-        rpm: 1800 + Math.round(Math.sin(i / 7) * 1200 + Math.random() * 100),
-        load: 30 + Math.round(Math.cos(i / 4) * 30 + Math.random() * 5),
-        fuel: +(7.5 - i * 0.08 + Math.random() * 0.2).toFixed(2),
-        coolant: 85 + Math.round(Math.sin(i / 6) * 10 + Math.random() * 2),
-        throttle: 15 + Math.round(Math.sin(i / 5) * 20 + Math.random() * 3),
-        intakeTemp: 30 + Math.round(Math.sin(i / 8) * 6 + Math.random() * 2),
-        oilTemp: 90 + Math.round(Math.sin(i / 9) * 15 + Math.random() * 2),
-        maf: +(2.0 + Math.sin(i / 7) * 1.5 + Math.random() * 0.2).toFixed(2),
+        speed: 55 + Math.round(Math.sin(i / 8) * 18 + Math.random() * 6),
+        steering: Math.round(Math.sin(i / 5) * 8),
+        rpm: 2000 + Math.round(Math.sin(i / 10) * 1500 + Math.random() * 120),
+        load: 40 + Math.round(Math.cos(i / 7) * 25 + Math.random() * 7),
+        fuel: +(7.5 - i * 0.07 + Math.random() * 0.15).toFixed(2),
+        coolant: 90 + Math.round(Math.sin(i / 9) * 8 + Math.random() * 2),
+        throttle: 20 + Math.round(Math.sin(i / 6) * 18 + Math.random() * 4),
+        intakeTemp: 32 + Math.round(Math.sin(i / 12) * 5 + Math.random() * 2),
+        oilTemp: 95 + Math.round(Math.sin(i / 13) * 12 + Math.random() * 2),
+        maf: +(2.2 + Math.sin(i / 10) * 1.2 + Math.random() * 0.2).toFixed(2),
         baro: 101,
-        voltage: +(13.5 + Math.sin(i / 10) * 0.5 + Math.random() * 0.1).toFixed(2),
-        gear: Math.min(6, Math.max(1, Math.floor(i / 7) + 1)),
-        brake: i % 10 === 0 ? 1 : 0,
-        accel: +(0.10 + Math.sin(i / 6) * 0.15 + Math.random() * 0.02).toFixed(2),
+        voltage: +(13.7 + Math.sin(i / 15) * 0.4 + Math.random() * 0.1).toFixed(2),
+        gear: Math.min(6, Math.max(1, Math.floor(i / 10) + 1)),
+        brake: i % 12 === 0 ? 1 : 0,
+        accel: +(0.12 + Math.sin(i / 8) * 0.13 + Math.random() * 0.02).toFixed(2),
         tirePressFL: 32,
         tirePressFR: 32,
         tirePressRL: 30,
