@@ -1,3 +1,17 @@
+  // Slide-in animation on scroll
+  function initSlideInAnimations() {
+    const slideEls = document.querySelectorAll('.slide-in');
+    function onScroll() {
+      slideEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  }
 // Minimal interactivity for CanoramIQ site
 (function(){
   const yearEl = document.getElementById('year');
@@ -176,12 +190,14 @@
   // Wait for Leaflet to load (defer) then init
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      initDriveMap();
-      initAnimatedData();
+  initDriveMap();
+  initAnimatedData();
+  initSlideInAnimations();
     });
   } else {
-    initDriveMap();
-    initAnimatedData();
+  initDriveMap();
+  initAnimatedData();
+  initSlideInAnimations();
   }
 
   // Animated Data Visualization
