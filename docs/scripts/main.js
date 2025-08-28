@@ -175,8 +175,79 @@
 
   // Wait for Leaflet to load (defer) then init
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initDriveMap);
+    document.addEventListener('DOMContentLoaded', () => {
+      initDriveMap();
+      initAnimatedData();
+    });
   } else {
     initDriveMap();
+    initAnimatedData();
+  }
+
+  // Animated Data Visualization
+  function initAnimatedData() {
+    // Animate KPI bar values
+    function animateKPI(id, start, end, unit, duration = 1200) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const valueEl = el.querySelector('.kpi-value');
+      let startTime;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        const progress = Math.min((ts - startTime) / duration, 1);
+        const val = (end - start) * progress + start;
+        valueEl.textContent = unit === '°C' ? Math.round(val) : val.toFixed(1);
+        if (progress < 1) requestAnimationFrame(step);
+        else valueEl.textContent = unit === '°C' ? Math.round(end) : end.toFixed(1);
+      }
+      requestAnimationFrame(step);
+    }
+    animateKPI('kpi-fuel', 8.2, 6.8, 'L/100km');
+    animateKPI('kpi-coolant', 75, 89, '°C');
+    animateKPI('kpi-score', 80, 92, '');
+
+    // Animated fuel economy chart
+    const ctx = document.getElementById('fuelChart')?.getContext('2d');
+    if (!ctx) return;
+    // Simulated data
+    const data = [8.2, 7.9, 7.5, 7.2, 7.0, 6.9, 6.8, 6.8, 6.9, 7.0, 7.1, 7.0, 6.9, 6.8];
+    let frame = 0;
+    function drawChart() {
+      ctx.clearRect(0, 0, 320, 120);
+      // Axes
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(32, 16);
+      ctx.lineTo(32, 104);
+      ctx.lineTo(310, 104);
+      ctx.stroke();
+      // Line
+      ctx.strokeStyle = '#22d3ee';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let i = 0; i <= frame; i++) {
+        const x = 32 + (i * 20);
+        const y = 104 - ((data[i] - 6.5) * 32);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      // Dots
+      ctx.fillStyle = '#38bdf8';
+      for (let i = 0; i <= frame; i++) {
+        const x = 32 + (i * 20);
+        const y = 104 - ((data[i] - 6.5) * 32);
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+      // Animate
+      if (frame < data.length - 1) {
+        frame++;
+        requestAnimationFrame(drawChart);
+      }
+    }
+    drawChart();
   }
 })();
