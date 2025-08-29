@@ -1,5 +1,5 @@
 .phone-scroll-container {
-  height: 420px;
+  height: 100%;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   display: flex;
@@ -8,10 +8,14 @@
   border-radius: 24px;
   background: rgba(15,23,42,0.92);
   box-shadow: 0 4px 24px rgba(34,197,94,0.10);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .screen-panel {
-  min-height: 320px;
-  padding: 18px 0 0 0;
+  height: 100vh;
   scroll-snap-align: start;
   position: relative;
   z-index: 1;
@@ -23,13 +27,17 @@
   box-shadow: 0 -8px 32px rgba(34,197,94,0.08);
 }
 .screen-map-panel {
-  background: transparent;
+  background: rgba(15,23,42,0.92);
 }
 .screen-kpi-panel {
   background: rgba(34,197,94,0.04);
   border-radius: 18px;
   box-shadow: 0 2px 12px rgba(34,197,94,0.10);
   margin: 0 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .screen-elm-panel {
   background: rgba(34,197,94,0.08);
@@ -38,8 +46,8 @@
   margin: 0 12px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 120px;
 }
 .elm-status {
