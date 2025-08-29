@@ -85,27 +85,60 @@
                 </div>
                 <!-- Page 2: Bluetooth connectivity (full-page) -->
                 <div class="screen-panel screen-elm-panel" style="height:100%;scroll-snap-align:start;">
-                  <div class="elm-status">
-                    <span class="elm-title">ELM327 Bluetooth</span>
-                    <span class="elm-chip">🔵</span>
-                    <span class="elm-conn">Status: <span class="elm-conn-status">Connected</span></span>
-                    <span class="elm-device">Device: ELM327-OBDII</span>
+                  <div class="phone-page phone-bt">
+                    <div class="bt-card">
+                      <div class="bt-icon-wrap" aria-hidden="true">
+                        <!-- Car icon -->
+                        <svg class="icon-car" width="112" height="56" viewBox="0 0 128 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="12" y="24" width="84" height="18" rx="6" fill="#0f1a2e" stroke="rgba(148,163,184,.35)"/>
+                          <path d="M22 24 L36 16 H78 L92 24" fill="#0f1a2e" stroke="rgba(148,163,184,.35)"/>
+                          <circle cx="30" cy="44" r="7" fill="#101a2a" stroke="#2b3957"/>
+                          <circle cx="84" cy="44" r="7" fill="#101a2a" stroke="#2b3957"/>
+                        </svg>
+                        <!-- Bluetooth badge -->
+                        <svg class="icon-bt" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="12" fill="#0b3b46"/>
+                          <path d="M8 7l8 5-8 5V7zm4 5l4 4m-4-4l4-4" stroke="#22d3ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                      <div class="bt-meta">
+                        <div class="bt-title">ELM327 Bluetooth</div>
+                        <div class="bt-status"><span class="bt-dot"></span>Connected</div>
+                        <div class="bt-voltage">Battery <strong>13.8 V</strong> <span class="pill pill-stable">Stable</span></div>
+                        <div class="bt-device">Device: ELM327-OBDII</div>
+                      </div>
+                      <button class="btn-phone" type="button">Check connectivity status</button>
+                    </div>
                   </div>
                 </div>
                 <!-- Page 3: KPIs (full-page) -->
                 <div class="screen-panel screen-kpi-panel" style="height:100%;scroll-snap-align:start;">
-                  <div class="screen-stats">
-                    <div class="stat">
-                      <span class="stat-label">Fuel</span>
-                      <span class="stat-value">6.8 L/100km</span>
-                    </div>
-                    <div class="stat">
-                      <span class="stat-label">Coolant</span>
-                      <span class="stat-value">89 °C</span>
-                    </div>
-                    <div class="stat">
-                      <span class="stat-label">Score</span>
-                      <span class="stat-value">92</span>
+                  <div class="phone-page phone-kpis">
+                    <div class="kpi-grid">
+                      <div class="kpi-card">
+                        <div class="kpi-name">Fuel economy</div>
+                        <div class="kpi-val">6.8 <span class="unit">L/100km</span></div>
+                      </div>
+                      <div class="kpi-card">
+                        <div class="kpi-name">Coolant temp</div>
+                        <div class="kpi-val">89 <span class="unit">°C</span></div>
+                      </div>
+                      <div class="kpi-card">
+                        <div class="kpi-name">Driver score</div>
+                        <div class="kpi-val">92<span class="unit">/100</span></div>
+                      </div>
+                      <div class="kpi-card">
+                        <div class="kpi-name">Electrical system</div>
+                        <div class="kpi-val">13.8 <span class="unit">V</span> <span class="pill pill-stable">Stable</span></div>
+                      </div>
+                      <div class="kpi-card">
+                        <div class="kpi-name">Injection health</div>
+                        <div class="kpi-val"><span class="pill pill-good">Good</span></div>
+                      </div>
+                      <div class="kpi-card">
+                        <div class="kpi-name">DPF health</div>
+                        <div class="kpi-val"><span class="pill pill-clean">Clean</span></div>
+                      </div>
                     </div>
                   </div>
                 </div>
