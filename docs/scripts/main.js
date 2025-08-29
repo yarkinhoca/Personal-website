@@ -20,42 +20,61 @@
     const container = section?.querySelector('.phone-scroll-container');
     if (!section || !container) return;
 
-    let hijacking = false;
+  let hijacking = false;
+  let cooldownUntil = 0; // avoid instant re-hijack after release
 
     function inViewport(el){
       const r = el.getBoundingClientRect();
       return r.top <= 80 && r.bottom >= (r.height * 0.6);
     }
 
+    function lock(){
+      if (hijacking) return;
+      hijacking = true;
+      document.body.style.overflow = 'hidden';
+      // Start on the first page when entering
+      if (container.scrollTop < 4) container.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    function release(){
+      if (!hijacking) return;
+      hijacking = false;
+      document.body.style.overflow = '';
+      cooldownUntil = performance.now() + 600; // ms
+    }
+
     function onScroll(){
+      if (performance.now() < cooldownUntil) return;
       if (!hijacking && inViewport(section)){
-        hijacking = true;
-        document.body.style.overflow = 'hidden';
+        lock();
       } else if (hijacking && !inViewport(section)){
-        hijacking = false;
-        document.body.style.overflow = '';
+        release();
       }
     }
 
-    function tryRelease(){
-      const atEnd = Math.ceil(container.scrollTop + container.clientHeight) >= container.scrollHeight;
-      const atStart = container.scrollTop <= 0;
-      // If user scrolls above section and container is at start, release; if below and at end, release
-      const secRect = section.getBoundingClientRect();
-      const above = secRect.top > 80; // not yet reached
-      const below = secRect.bottom < (window.innerHeight - 40);
-      if ((below && atEnd) || (above && atStart)){
-        hijacking = false;
-        document.body.style.overflow = '';
-      }
+    function atEnd(){
+      return Math.ceil(container.scrollTop + container.clientHeight) >= container.scrollHeight;
+    }
+    function atStart(){
+      return container.scrollTop <= 0;
     }
 
     // wheel/scroll -> route into container when hijacking
     window.addEventListener('wheel', (e)=>{
       if (!hijacking) return;
-      e.preventDefault();
-      container.scrollBy({ top: e.deltaY, behavior: 'auto' });
-      tryRelease();
+      const dy = e.deltaY;
+      const goingDown = dy > 0;
+      const goingUp = dy < 0;
+      if ((goingDown && !atEnd()) || (goingUp && !atStart())){
+        e.preventDefault();
+        container.scrollBy({ top: dy, behavior: 'auto' });
+      } else {
+        // We are at an edge; release and forward remaining scroll to page
+        e.preventDefault();
+        const remain = dy;
+        release();
+        window.scrollBy({ top: remain, behavior: 'auto' });
+      }
     }, { passive:false });
 
     // touch
@@ -66,14 +85,21 @@
       const y = e.touches[0].clientY;
       const dy = lastY - y; // positive when moving up
       lastY = y;
-      container.scrollBy({ top: dy, behavior: 'auto' });
-      e.preventDefault();
-      tryRelease();
+      const goingDown = dy > 0; // content moves up
+      const goingUp = dy < 0;
+      if ((goingDown && !atEnd()) || (goingUp && !atStart())){
+        container.scrollBy({ top: dy, behavior: 'auto' });
+        e.preventDefault();
+      } else {
+        // At an edge: release and let page consume gesture
+        release();
+        // Allow this event to bubble to page scroll; don't preventDefault
+      }
     }, { passive:false });
 
     // Sync hijack state on native scroll as well
     window.addEventListener('scroll', onScroll, { passive:true });
-    container.addEventListener('scroll', tryRelease, { passive:true });
+    // Make sure lock state matches initial position
     onScroll();
   }
   initPhoneScrollHijack();
