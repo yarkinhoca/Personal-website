@@ -25,19 +25,20 @@
     />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <div class="container header-inner">
-  <a class="brand" href="#" aria-label="CanoramIQ home">
-          <img class="logo" src="./canoramiq_logo.png" alt="CanoramIQ logo" width="48" height="48" style="display:block;max-width:48px;max-height:48px;border-radius:12px;box-shadow:0 4px 16px rgba(34,211,238,0.18),0 1px 8px rgba(0,0,0,0.10);background:#fff;padding:4px;" />
-          <span>CanoramIQ</span>
-        </a>
-        <nav class="nav" aria-label="Primary">
-          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
-            <span class="sr-only">Menu</span>
-            <div class="hamburger" aria-hidden="true"></div>
-          </button>
-          <ul id="nav-menu" class="nav-list">
+    <div id="main-content">
+      <a class="skip-link" href="#main">Skip to content</a>
+      <header class="site-header">
+        <div class="container header-inner">
+          <a class="brand" href="#" aria-label="CanoramIQ home">
+            <img class="logo" src="./canoramiq_logo.png" alt="CanoramIQ logo" width="48" height="48" style="display:block;max-width:48px;max-height:48px;border-radius:12px;box-shadow:0 4px 16px rgba(34,211,238,0.18),0 1px 8px rgba(0,0,0,0.10);background:#fff;padding:4px;" />
+            <span>CanoramIQ</span>
+          </a>
+          <nav class="nav" aria-label="Primary">
+            <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+              <span class="sr-only">Menu</span>
+              <div class="hamburger" aria-hidden="true"></div>
+            </button>
+            <ul id="nav-menu" class="nav-list">
             <li><a href="#how">How it works</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#kpis">KPIs</a></li>
@@ -48,7 +49,7 @@
       </div>
     </header>
 
-    <main id="main">
+  <main id="main">
       <!-- Hero -->
       <section class="section hero">
         <div class="container hero-inner">
@@ -287,7 +288,23 @@
           <a href="#" class="link-muted">Terms</a>
         </div>
       </div>
-    </footer>
+      </footer>
+    </div>
+    <!-- Phone screen trigger element -->
+    <div id="phone-trigger"></div>
+    <div id="phone-screen-wrapper">
+      <div class="phone-scroll-container">
+        <div class="screen-panel screen-map-panel">
+          <!-- Map and CAN data (move your map UI here) -->
+        </div>
+        <div class="screen-panel screen-elm-panel">
+          <!-- Bluetooth connectivity (move your ELM327 UI here) -->
+        </div>
+        <div class="screen-panel screen-kpi-panel">
+          <!-- KPIs (move your KPI UI here) -->
+        </div>
+      </div>
+    </div>
 
     <!-- Leaflet JS -->
     <script
@@ -297,5 +314,6 @@
       defer
     ></script>
     <script src="./scripts/main.js" defer></script>
+  <script src="./scripts/main.js" defer></script>
   </body>
   </html>
