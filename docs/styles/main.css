@@ -79,6 +79,8 @@ a:hover{color:#fff}
 #phone-scroll-section .phone-screen{height:600px}
 #phone-scroll-section .phone-scroll-container{height:100%;overflow-y:auto;scroll-snap-type:y mandatory}
 #phone-scroll-section .screen-panel{height:100%;scroll-snap-align:start}
+/* create breathing room after the phone section */
+#phone-scroll-section + .section{margin-top:48px}
 /* Full-bleed map inside the map page */
 .screen-map-panel{position:relative}
 .screen-map-panel #drive-map{position:absolute;inset:0}
