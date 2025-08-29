@@ -233,12 +233,15 @@ a:hover{color:#fff}
   .kpis{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width: 560px){
-  .nav-toggle{display:inline-flex}
-  .nav-list{display:none;position:absolute;right:16px;top:88px;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.2);padding:10px 12px;border-radius:12px;flex-direction:column;gap:10px}
+  /* Make header full-bleed so the logo can cover full viewport width */
+  .site-header .container{padding:0}
+  .header-inner{flex-direction:column;align-items:stretch;gap:6px;padding:0}
+  .brand{gap:0;flex:1 1 auto;width:100%;background:transparent;border:0;padding:0;box-shadow:none}
+  .brand .logo{display:block;width:100%;height:auto;flex-basis:auto;border-radius:0;background:transparent;padding:0;box-shadow:none;filter:none}
+  .nav-toggle{display:inline-flex;align-self:flex-end;margin-top:4px}
+  /* Make menu drop under the full-width logo */
+  .nav-list{display:none;position:static;width:100%;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.2);padding:10px 12px;border-radius:12px;flex-direction:column;gap:10px;margin-top:8px}
   .nav-list.open{display:flex}
-  /* Enlarge logo and stretch the dark brand bar */
-  .brand{gap:0;flex:1 1 auto}
-  .brand .logo{width:88px;height:88px;flex-basis:88px}
   .hero h1{font-size:26px}
   .steps,.cards,.kpis{grid-template-columns:1fr}
 }
