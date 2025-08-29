@@ -1,3 +1,21 @@
+/* Phone screen overlay and main content lock styles */
+#phone-screen-wrapper {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  display: none;
+  z-index: 100;
+  background: rgba(15,23,42,0.98);
+  justify-content: center;
+  align-items: center;
+}
+#phone-screen-wrapper.active {
+  display: flex;
+}
+#main-content.locked {
+  filter: blur(8px) brightness(0.7);
+  pointer-events: none;
+  user-select: none;
+}
 /* CanoramIQ site styles */
 :root{
   --bg:#0b1220; /* slate-950 */
