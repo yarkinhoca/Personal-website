@@ -14,33 +14,69 @@
   }
 // Minimal interactivity for CanoramIQ site
 (function(){
-  // Phone screen overlay logic
-  window.addEventListener('scroll', function() {
-    const phoneTrigger = document.getElementById('phone-trigger');
-    const phoneScreen = document.getElementById('phone-screen-wrapper');
-    const mainContent = document.getElementById('main-content');
-    if (phoneTrigger && phoneScreen && mainContent) {
-      const triggerRect = phoneTrigger.getBoundingClientRect();
-      if (triggerRect.top <= 0) {
-        phoneScreen.classList.add('active');
-        mainContent.classList.add('locked');
+  // Phone scroll-hijack: lock page, scroll inside phone, then release
+  function initPhoneScrollHijack(){
+    const section = document.getElementById('phone-scroll-section');
+    const container = section?.querySelector('.phone-scroll-container');
+    if (!section || !container) return;
+
+    let hijacking = false;
+
+    function inViewport(el){
+      const r = el.getBoundingClientRect();
+      return r.top <= 80 && r.bottom >= (r.height * 0.6);
+    }
+
+    function onScroll(){
+      if (!hijacking && inViewport(section)){
+        hijacking = true;
         document.body.style.overflow = 'hidden';
-      } else {
-        phoneScreen.classList.remove('active');
-        mainContent.classList.remove('locked');
+      } else if (hijacking && !inViewport(section)){
+        hijacking = false;
         document.body.style.overflow = '';
       }
     }
-  });
 
-  document.querySelector('.phone-scroll-container')?.addEventListener('scroll', function(e) {
-    const container = e.target;
-    if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
-      document.getElementById('phone-screen-wrapper').classList.remove('active');
-      document.getElementById('main-content').classList.remove('locked');
-      document.body.style.overflow = '';
+    function tryRelease(){
+      const atEnd = Math.ceil(container.scrollTop + container.clientHeight) >= container.scrollHeight;
+      const atStart = container.scrollTop <= 0;
+      // If user scrolls above section and container is at start, release; if below and at end, release
+      const secRect = section.getBoundingClientRect();
+      const above = secRect.top > 80; // not yet reached
+      const below = secRect.bottom < (window.innerHeight - 40);
+      if ((below && atEnd) || (above && atStart)){
+        hijacking = false;
+        document.body.style.overflow = '';
+      }
     }
-  });
+
+    // wheel/scroll -> route into container when hijacking
+    window.addEventListener('wheel', (e)=>{
+      if (!hijacking) return;
+      e.preventDefault();
+      container.scrollBy({ top: e.deltaY, behavior: 'auto' });
+      tryRelease();
+    }, { passive:false });
+
+    // touch
+    let lastY = 0;
+    window.addEventListener('touchstart', (e)=>{ if (hijacking) lastY = e.touches[0].clientY; }, { passive:true });
+    window.addEventListener('touchmove', (e)=>{
+      if (!hijacking) return;
+      const y = e.touches[0].clientY;
+      const dy = lastY - y; // positive when moving up
+      lastY = y;
+      container.scrollBy({ top: dy, behavior: 'auto' });
+      e.preventDefault();
+      tryRelease();
+    }, { passive:false });
+
+    // Sync hijack state on native scroll as well
+    window.addEventListener('scroll', onScroll, { passive:true });
+    container.addEventListener('scroll', tryRelease, { passive:true });
+    onScroll();
+  }
+  initPhoneScrollHijack();
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
