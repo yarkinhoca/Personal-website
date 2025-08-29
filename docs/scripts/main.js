@@ -252,27 +252,20 @@
         fillOpacity: 0.85,
         weight: 2
       }).addTo(map);
-      let popupHtml = `<strong>Timestamp:</strong> ${point.timestamp}<br />`;
-      popupHtml += `<strong>Speed:</strong> ${point.speed} km/h<br />`;
-      popupHtml += `<strong>Steering Angle:</strong> ${point.steering}°<br />`;
-      popupHtml += `<strong>Engine RPM:</strong> ${point.rpm}<br />`;
-      popupHtml += `<strong>Engine Load:</strong> ${point.load}%<br />`;
-      popupHtml += `<strong>Instant Fuel Consumption:</strong> ${point.fuel} L/100km<br />`;
-      popupHtml += `<strong>Coolant Temp:</strong> ${point.coolant} °C<br />`;
-      popupHtml += `<strong>Throttle Position:</strong> ${point.throttle}%<br />`;
-      popupHtml += `<strong>Intake Temp:</strong> ${point.intakeTemp} °C<br />`;
-      popupHtml += `<strong>Oil Temp:</strong> ${point.oilTemp} °C<br />`;
-      popupHtml += `<strong>MAF:</strong> ${point.maf} g/s<br />`;
-      popupHtml += `<strong>Barometric Pressure:</strong> ${point.baro} kPa<br />`;
-      popupHtml += `<strong>Battery Voltage:</strong> ${point.voltage} V<br />`;
-      popupHtml += `<strong>Gear:</strong> ${point.gear}<br />`;
-      popupHtml += `<strong>Brake:</strong> ${point.brake}<br />`;
-      popupHtml += `<strong>Acceleration:</strong> ${point.accel} g<br />`;
-      popupHtml += `<strong>Tire Pressure FL:</strong> ${point.tirePressFL} psi<br />`;
-      popupHtml += `<strong>Tire Pressure FR:</strong> ${point.tirePressFR} psi<br />`;
-      popupHtml += `<strong>Tire Pressure RL:</strong> ${point.tirePressRL} psi<br />`;
-      popupHtml += `<strong>Tire Pressure RR:</strong> ${point.tirePressRR} psi`;
-      marker.bindPopup(popupHtml);
+      // Minimal, elegant popup content
+      const time = new Date(point.timestamp);
+      const hh = String(time.getHours()).padStart(2,'0');
+      const mm = String(time.getMinutes()).padStart(2,'0');
+      const popupHtml = `
+        <div class="can-popup-head">Segment <span class="time">${hh}:${mm}</span></div>
+        <ul class="can-list">
+          <li><span>Speed</span><strong>${point.speed} km/h</strong></li>
+          <li><span>RPM</span><strong>${point.rpm}</strong></li>
+          <li><span>Fuel</span><strong>${point.fuel} L/100km</strong></li>
+          <li><span>Coolant</span><strong>${point.coolant} °C</strong></li>
+          <li><span>Voltage</span><strong>${point.voltage} V</strong></li>
+        </ul>`;
+      marker.bindPopup(popupHtml, { className: 'can-popup', maxWidth: 220, closeButton: true, autoClose: true, autoPan: true, autoPanPadding: [8,8] });
     });
   }
 
