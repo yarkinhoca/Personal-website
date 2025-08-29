@@ -3,40 +3,6 @@
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
   display: none;
-  z-index: 100;
-  background: rgba(15,23,42,0.98);
-  justify-content: center;
-  align-items: center;
-}
-#phone-screen-wrapper.active {
-  display: flex;
-}
-#main-content.locked {
-  filter: blur(8px) brightness(0.7);
-  pointer-events: none;
-  user-select: none;
-}
-/* CanoramIQ site styles */
-:root{
-  --bg:#0b1220; /* slate-950 */
-  --panel:#0f172a; /* slate-900 */
-  --muted:#94a3b8; /* slate-400 */
-  --text:#e2e8f0; /* slate-200 */
-  --brand:#06b6d4; /* cyan-500 */
-  --brand-2:#22d3ee; /* cyan-400 */
-  --accent:#38bdf8; /* sky-400 */
-  --ok:#22c55e; /* green-500 */
-  --warn:#f59e0b; /* amber-500 */
-  --danger:#ef4444; /* red-500 */
-  --radius:14px;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-  color:var(--text);
   background:radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.12), transparent 60%),
              radial-gradient(900px 600px at 110% 10%, rgba(56,189,248,.10), transparent 50%),
              var(--bg);
