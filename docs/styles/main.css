@@ -38,7 +38,7 @@ img,svg{display:block;max-width:100%}
 .container{width:100%;max-width:1100px;margin:0 auto;padding:0 20px}
 /* Headings and text */
 h1,h2,h3{line-height:1.2;margin:0 0 12px}
-h1{font-size:42px;letter-spacing:-0.02em}
+h1{font-size:34px;letter-spacing:-0.02em}
 h2{font-size:28px}
 h3{font-size:20px}
 p{margin:0 0 12px;color:var(--muted)}
@@ -53,7 +53,7 @@ a:hover{color:#fff}
 /* Header */
 .site-header{position:relative;z-index:10;background:rgba(11,18,32,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-.brand{display:flex;gap:10px;align-items:center;color:#e2e8f0;text-decoration:none;font-weight:700;font-size:18px}
+.brand{display:flex;gap:12px;align-items:center;color:#e2e8f0;text-decoration:none;font-weight:800;font-size:20px}
 .logo{filter:drop-shadow(0 6px 14px rgba(34,211,238,.25))}
 .nav-toggle{display:none;background:none;border:0;color:var(--text)}
 .nav-list{display:flex;gap:18px;align-items:center;list-style:none;margin:0;padding:0}
@@ -233,6 +233,6 @@ a:hover{color:#fff}
   .nav-toggle{display:inline-flex}
   .nav-list{display:none;position:absolute;right:16px;top:52px;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.2);padding:10px 12px;border-radius:12px;flex-direction:column;gap:10px}
   .nav-list.open{display:flex}
-  .hero h1{font-size:30px}
+  .hero h1{font-size:26px}
   .steps,.cards,.kpis{grid-template-columns:1fr}
 }
