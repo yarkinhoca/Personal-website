@@ -72,6 +72,18 @@ a:hover{color:#fff}
 .section.alt{background:transparent}
 .hero{padding-top:32px}
 .hero-inner{display:block}
+/* Phone scroll-hijack section */
+#phone-scroll-section{min-height:140vh}
+#phone-scroll-section .phone-scroll-fixed{position:sticky;top:80px}
+#phone-scroll-section .phone{margin:0 auto}
+#phone-scroll-section .phone-screen{height:600px}
+#phone-scroll-section .phone-scroll-container{height:100%;overflow-y:auto;scroll-snap-type:y mandatory}
+#phone-scroll-section .screen-panel{height:100%;scroll-snap-align:start}
+/* Full-bleed map inside the map page */
+.screen-map-panel{position:relative}
+.screen-map-panel #drive-map{position:absolute;inset:0}
+/* Center content for full-page feel */
+.screen-elm-panel,.screen-kpi-panel{display:grid;place-items:center}
 .lead{font-size:18px;color:var(--muted);margin:0 0 16px}
 .hero .cta{display:flex;gap:12px;margin:18px 0 10px}
 .hero-highlights{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;padding:0;list-style:none}
