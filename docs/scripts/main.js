@@ -14,6 +14,33 @@
   }
 // Minimal interactivity for CanoramIQ site
 (function(){
+  // Phone screen overlay logic
+  window.addEventListener('scroll', function() {
+    const phoneTrigger = document.getElementById('phone-trigger');
+    const phoneScreen = document.getElementById('phone-screen-wrapper');
+    const mainContent = document.getElementById('main-content');
+    if (phoneTrigger && phoneScreen && mainContent) {
+      const triggerRect = phoneTrigger.getBoundingClientRect();
+      if (triggerRect.top <= 0) {
+        phoneScreen.classList.add('active');
+        mainContent.classList.add('locked');
+        document.body.style.overflow = 'hidden';
+      } else {
+        phoneScreen.classList.remove('active');
+        mainContent.classList.remove('locked');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  document.querySelector('.phone-scroll-container')?.addEventListener('scroll', function(e) {
+    const container = e.target;
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+      document.getElementById('phone-screen-wrapper').classList.remove('active');
+      document.getElementById('main-content').classList.remove('locked');
+      document.body.style.overflow = '';
+    }
+  });
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
