@@ -51,15 +51,20 @@ a:hover{color:#fff}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* Header */
+/* Header */
 .site-header{position:relative;z-index:10;background:rgba(11,18,32,.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 0;gap:12px}
+/* Full-bleed header so logo can span the viewport width */
+.site-header .container{padding:0}
+/* Stack logo on top and nav below across all sizes for a consistent look */
+.header-inner{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;gap:6px}
 /* Brand cluster (logo + wordmark) */
-.brand{display:flex;gap:0;align-items:center;color:#e2e8f0;text-decoration:none;background:rgba(2,6,23,.65);border:1px solid var(--border);padding:6px 12px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.brand{display:flex;gap:0;align-items:center;color:#e2e8f0;text-decoration:none;width:100%;background:transparent;border:0;padding:0;border-radius:0;box-shadow:none}
 .logo{filter:drop-shadow(0 6px 14px rgba(34,211,238,.25))}
 /* Ensure the logo fills the left (red) area and text sits to its right (yellow) */
-.brand .logo{width:72px;height:72px;flex:0 0 72px;border-radius:16px;background:#fff;padding:6px;box-shadow:0 6px 20px rgba(34,211,238,0.22),0 2px 10px rgba(0,0,0,0.12)}
+.brand .logo{display:block;width:100%;height:auto;flex:0 0 auto;border-radius:0;background:transparent;padding:0;box-shadow:none;filter:none}
 .nav-toggle{display:none;background:none;border:0;color:var(--text)}
-.nav-list{display:flex;gap:18px;align-items:center;list-style:none;margin:0;padding:0}
+.nav{width:100%}
+.nav-list{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;list-style:none;margin:8px 0 0;padding:0}
 .nav-list a{color:#cbd5e1;text-decoration:none}
 .nav-list a:hover{color:#fff}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid var(--border);padding:10px 16px;color:#e2e8f0;text-decoration:none;background:rgba(2,6,23,.35)}
@@ -233,13 +238,7 @@ a:hover{color:#fff}
   .kpis{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width: 560px){
-  /* Make header full-bleed so the logo can cover full viewport width */
-  .site-header .container{padding:0}
-  .header-inner{flex-direction:column;align-items:stretch;gap:6px;padding:0}
-  .brand{gap:0;flex:1 1 auto;width:100%;background:transparent;border:0;padding:0;box-shadow:none}
-  .brand .logo{display:block;width:100%;height:auto;flex-basis:auto;border-radius:0;background:transparent;padding:0;box-shadow:none;filter:none}
   .nav-toggle{display:inline-flex;align-self:flex-end;margin-top:4px}
-  /* Make menu drop under the full-width logo */
   .nav-list{display:none;position:static;width:100%;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.2);padding:10px 12px;border-radius:12px;flex-direction:column;gap:10px;margin-top:8px}
   .nav-list.open{display:flex}
   .hero h1{font-size:26px}
