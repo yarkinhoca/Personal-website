@@ -18,6 +18,8 @@
   function initPhoneScrollHijack(){
     const section = document.getElementById('phone-scroll-section');
     const container = section?.querySelector('.phone-scroll-container');
+  const pager = section?.querySelector('.phone-pager');
+  const dots = pager ? Array.from(pager.querySelectorAll('.pager-dot')) : [];
     if (!section || !container) return;
 
   let hijacking = false;
@@ -101,6 +103,28 @@
     window.addEventListener('scroll', onScroll, { passive:true });
     // Make sure lock state matches initial position
     onScroll();
+
+    // Snap-to-panel behavior and pager sync
+    let snapTimer;
+    function syncPager(){
+      if (!dots.length) return;
+      const idx = Math.round(container.scrollTop / container.clientHeight);
+      dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+    }
+    container.addEventListener('scroll', ()=>{
+      syncPager();
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(()=>{
+        const idx = Math.round(container.scrollTop / container.clientHeight);
+        container.scrollTo({ top: idx * container.clientHeight, behavior: 'smooth' });
+      }, 120);
+    }, { passive:true });
+    dots.forEach((dot)=>{
+      dot.addEventListener('click', ()=>{
+        const idx = Number(dot.dataset.index||0);
+        container.scrollTo({ top: idx * container.clientHeight, behavior: 'smooth' });
+      });
+    });
   }
   initPhoneScrollHijack();
   const yearEl = document.getElementById('year');
@@ -202,7 +226,7 @@
   [41.0082, 28.9784] // Sultanahmet
     ];
     // Generate CAN data for each coordinate
-    const canDataPoints = [];
+  const canDataPoints = [];
     let timestamp = new Date('2025-08-27T10:00:00Z');
     for (let i = 0; i < routeCoords.length; i++) {
       const [lat, lng] = routeCoords[i];
@@ -267,6 +291,44 @@
         </ul>`;
       marker.bindPopup(popupHtml, { className: 'can-popup', maxWidth: 220, closeButton: true, autoClose: true, autoPan: true, autoPanPadding: [8,8] });
     });
+
+    // Stream some demo updates into the phone KPIs and health gauge
+    const fuelEl = document.getElementById('phone-kpi-fuel');
+    const coolantEl = document.getElementById('phone-kpi-coolant');
+    const scoreEl = document.getElementById('phone-kpi-score');
+    const voltEl = document.getElementById('phone-kpi-voltage');
+    const voltStatusEl = document.getElementById('phone-kpi-voltage-status');
+    const injEl = document.getElementById('phone-kpi-injection');
+    const dpfEl = document.getElementById('phone-kpi-dpf');
+    const hg = document.getElementById('hg-fg');
+    const hgText = document.getElementById('hg-text');
+
+    function setHealth(val){
+      if (!hg || !hgText) return;
+      const circumference = 2 * Math.PI * 52; // r=52
+      const pct = Math.max(0, Math.min(100, val));
+      const dash = circumference * (1 - pct/100);
+      hg.style.strokeDashoffset = String(dash);
+      hgText.textContent = String(Math.round(pct));
+      hg.style.stroke = pct > 80 ? '#22d3ee' : pct > 60 ? '#38bdf8' : pct > 40 ? '#f59e0b' : '#ef4444';
+    }
+    let i = 0;
+    setInterval(()=>{
+      const p = canDataPoints[i % canDataPoints.length];
+      if (fuelEl) fuelEl.textContent = p.fuel.toFixed(1);
+      if (coolantEl) coolantEl.textContent = String(p.coolant);
+      if (voltEl) voltEl.textContent = String(p.voltage);
+      if (scoreEl) scoreEl.textContent = String(92 - (p.brake? 3:0) - Math.max(0, Math.abs(p.steering)-5));
+      if (voltStatusEl){
+        const stable = p.voltage > 13.2 && p.voltage < 14.5;
+        voltStatusEl.textContent = stable ? 'Stable' : 'Check';
+        voltStatusEl.className = 'pill ' + (stable ? 'pill-stable' : 'pill-clean');
+      }
+      if (injEl) injEl.textContent = (p.maf > 3.6 || p.maf < 1.0) ? 'Inspect' : 'Good';
+      if (dpfEl) dpfEl.textContent = (p.load > 60 && p.rpm < 1500) ? 'Soot↑' : 'Clean';
+      setHealth(95 - Math.max(0, (p.rpm-3000)/50) - (p.brake? 5:0));
+      i++;
+    }, 1600);
   }
 
   // Wait for Leaflet to load (defer) then init
@@ -284,11 +346,16 @@
 
   // Animated Data Visualization
   function initAnimatedData() {
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Animate KPI bar values
     function animateKPI(id, start, end, unit, duration = 1200) {
       const el = document.getElementById(id);
       if (!el) return;
       const valueEl = el.querySelector('.kpi-value');
+      if (prefersReduced){
+        valueEl.textContent = unit === '°C' ? Math.round(end) : end.toFixed(1);
+        return;
+      }
       let startTime;
       function step(ts) {
         if (!startTime) startTime = ts;
@@ -307,6 +374,15 @@
     // Animated fuel economy chart
     const ctx = document.getElementById('fuelChart')?.getContext('2d');
     if (!ctx) return;
+    if (prefersReduced){
+      // Draw static chart frame only
+      ctx.clearRect(0, 0, 320, 120);
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(32, 16); ctx.lineTo(32, 104); ctx.lineTo(310, 104); ctx.stroke();
+      return;
+    }
     // Simulated data
     const data = [8.2, 7.9, 7.5, 7.2, 7.0, 6.9, 6.8, 6.8, 6.9, 7.0, 7.1, 7.0, 6.9, 6.8];
     let frame = 0;
