@@ -11,6 +11,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.canoramiq.com/" />
     <meta name="theme-color" content="#0f172a" />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/canoramiq_logo.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/canoramiq_logo.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta property="og:image" content="https://www.canoramiq.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.canoramiq.com/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,6 +49,7 @@
             <li><a href="#how">How it works</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#kpis">KPIs</a></li>
+            <li><a href="#model-free">Model‑free</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a class="btn btn-small" href="#cta">Get updates</a></li>
           </ul>
@@ -102,8 +111,8 @@
                       </div>
                       <div class="bt-meta">
                         <div class="bt-title">ELM327 Bluetooth</div>
-                        <div class="bt-status"><span class="bt-dot"></span>Connected</div>
-                        <div class="bt-voltage">Battery <strong>13.8 V</strong> <span class="pill pill-stable">Stable</span></div>
+                        <div class="bt-status"><span class="bt-dot"></span><span id="bt-connected">Connected</span></div>
+                        <div class="bt-voltage">Battery <strong id="bt-voltage">13.8 V</strong> <span class="pill pill-stable" id="bt-voltage-status">Stable</span></div>
                         <div class="bt-device">Device: ELM327-OBDII</div>
                       </div>
                       <button class="btn-phone" type="button">Check connectivity status</button>
@@ -113,35 +122,49 @@
                 <!-- Page 3: KPIs (full-page) -->
                 <div class="screen-panel screen-kpi-panel" style="height:100%;scroll-snap-align:start;">
                   <div class="phone-page phone-kpis">
+                    <div class="health-gauge" aria-label="Vehicle health gauge">
+                      <svg class="hg-svg" viewBox="0 0 120 120" role="img" aria-label="Overall health">
+                        <circle class="hg-bg" cx="60" cy="60" r="52"></circle>
+                        <circle id="hg-fg" class="hg-fg" cx="60" cy="60" r="52"></circle>
+                        <text id="hg-text" class="hg-text" x="60" y="60">92</text>
+                        <text id="hg-sub" class="hg-sub" x="60" y="78">Health</text>
+                      </svg>
+                    </div>
                     <div class="kpi-grid">
                       <div class="kpi-card">
                         <div class="kpi-name">Fuel economy</div>
-                        <div class="kpi-val">6.8 <span class="unit">L/100km</span></div>
+                        <div class="kpi-val"><span id="phone-kpi-fuel">6.8</span> <span class="unit">L/100km</span></div>
                       </div>
                       <div class="kpi-card">
                         <div class="kpi-name">Coolant temp</div>
-                        <div class="kpi-val">89 <span class="unit">°C</span></div>
+                        <div class="kpi-val"><span id="phone-kpi-coolant">89</span> <span class="unit">°C</span></div>
                       </div>
                       <div class="kpi-card">
                         <div class="kpi-name">Driver score</div>
-                        <div class="kpi-val">92<span class="unit">/100</span></div>
+                        <div class="kpi-val"><span id="phone-kpi-score">92</span><span class="unit">/100</span></div>
                       </div>
                       <div class="kpi-card">
                         <div class="kpi-name">Electrical system</div>
-                        <div class="kpi-val">13.8 <span class="unit">V</span> <span class="pill pill-stable">Stable</span></div>
+                        <div class="kpi-val"><span id="phone-kpi-voltage">13.8</span> <span class="unit">V</span> <span class="pill pill-stable" id="phone-kpi-voltage-status">Stable</span></div>
                       </div>
                       <div class="kpi-card">
                         <div class="kpi-name">Injection health</div>
-                        <div class="kpi-val"><span class="pill pill-good">Good</span></div>
+                        <div class="kpi-val"><span class="pill pill-good" id="phone-kpi-injection">Good</span></div>
                       </div>
                       <div class="kpi-card">
                         <div class="kpi-name">DPF health</div>
-                        <div class="kpi-val"><span class="pill pill-clean">Clean</span></div>
+                        <div class="kpi-val"><span class="pill pill-clean" id="phone-kpi-dpf">Clean</span></div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- Add more panels here as needed -->
+              </div>
+              <!-- Pager overlay inside the phone screen -->
+              <div class="phone-pager" role="tablist" aria-label="Phone pages">
+                <button class="pager-dot active" aria-label="Map" data-index="0"></button>
+                <button class="pager-dot" aria-label="Bluetooth" data-index="1"></button>
+                <button class="pager-dot" aria-label="KPIs" data-index="2"></button>
               </div>
             </div>
             <div class="phone-info-block" style="margin-top:14px;max-width:220px;background:rgba(15,23,42,0.6);border-radius:8px;padding:7px 10px;box-shadow:0 1px 4px rgba(0,0,0,.06);color:#cbd5e1;font-size:13px;font-weight:500;text-align:center;">
@@ -166,8 +189,8 @@
                   <span class="kpi-value">92</span>
                 </div>
               </div>
-              <div class="animated-chart-container slide-in">
-                <canvas id="fuelChart" width="320" height="120" style="background:rgba(15,23,42,0.7);border-radius:12px;box-shadow:0 2px 8px rgba(34,197,94,0.10);"></canvas>
+              <div class="animated-chart-container slide-in" role="status" aria-live="polite">
+                <canvas id="fuelChart" width="320" height="120" aria-hidden="true" style="background:rgba(15,23,42,0.7);border-radius:12px;box-shadow:0 2px 8px rgba(34,197,94,0.10);"></canvas>
               </div>
             </section>
             <div class="app-store-buttons" style="display:flex;flex-direction:row;gap:7px;align-items:center;justify-content:center;margin-top:7px;">
@@ -262,6 +285,45 @@
         </div>
       </section>
 
+      <!-- Model-free signals and rules -->
+      <section id="model-free" class="section">
+        <div class="container">
+          <h2>Model‑free signals and rules</h2>
+          <div class="mf-grid">
+            <article class="mf-card">
+              <div class="mf-icon" aria-hidden="true">🌡️</div>
+              <h3>Coolant variance</h3>
+              <p>Detects abnormal fluctuations beyond expected thermal inertia.</p>
+            </article>
+            <article class="mf-card">
+              <div class="mf-icon" aria-hidden="true">🌬️</div>
+              <h3>MAF drift</h3>
+              <p>Tracks mass air flow deviations vs. RPM and throttle.</p>
+            </article>
+            <article class="mf-card">
+              <div class="mf-icon" aria-hidden="true">🔋</div>
+              <h3>Battery sag</h3>
+              <p>Monitors voltage dips under load and at idle.</p>
+            </article>
+            <article class="mf-card">
+              <div class="mf-icon" aria-hidden="true">🧭</div>
+              <h3>Idle roughness</h3>
+              <p>Flags RPM variance and misfire-like patterns at idle.</p>
+            </article>
+            <article class="mf-card">
+              <div class="mf-icon" aria-hidden="true">⚡</div>
+              <h3>Throttle jerk</h3>
+              <p>Highlights abrupt throttle changes vs. speed context.</p>
+            </article>
+            <article class="mf-card">
+              <div class="mf-icon" aria-hidden="true">🚦</div>
+              <h3>Speed compliance</h3>
+              <p>Estimates compliance vs. typical road speeds.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <!-- CTA / Beta sign-up -->
       <section id="cta" class="section cta">
         <div class="container cta-inner">
@@ -340,5 +402,12 @@
       defer
     ></script>
   <script src="./scripts/main.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
   </body>
   </html>
