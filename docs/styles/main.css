@@ -215,6 +215,14 @@ a:hover{color:#fff}
 .card h3{margin:6px 0 8px}
 .card p{margin:0;color:var(--muted)}
 
+/* Accessibility: focus-visible */
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important}
+}
+
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .kpi{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:var(--radius);border:1px solid var(--border);background:rgba(2,6,23,.35)}
 .kpi-label{color:#94a3b8}
