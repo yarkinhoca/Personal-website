@@ -254,6 +254,12 @@ a:hover{color:#fff}
 .mf-card p{margin:0;color:var(--muted)}
 .mf-icon{font-size:22px}
 
+/* Smart platform */
+.smart-diagram{display:flex;gap:10px;align-items:center;justify-content:flex-start;margin:12px 0 18px}
+.sd-node{padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(2,6,23,.45);color:#e2e8f0;font-weight:600}
+.sd-arrow{color:#94a3b8}
+.smart-cards{margin-top:10px}
+
 /* Responsive */
 @media (max-width: 960px){
   .hero-inner{grid-template-columns:1fr}
