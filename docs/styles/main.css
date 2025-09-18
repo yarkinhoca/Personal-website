@@ -109,6 +109,18 @@ a:hover{color:#fff}
 .hero-highlights{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;padding:0;list-style:none}
 .hero-highlights li{padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.08);border:1px solid var(--border);color:#cbd5e1}
 
+/* Industry icon strip and pills */
+.industry-icons{display:flex;gap:12px;margin:12px 0 6px;color:#94a3b8}
+.industry-icons .ii-item{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(148,163,184,.06);border:1px solid var(--border);transition:filter .15s ease}
+.industry-icons .ii-item:hover{filter:brightness(1.2)}
+.industry-pills{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:6px 0 0;padding:0}
+.industry-pills li{font-size:12px;color:#94a3b8;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.06)}
+
+/* Industry selector (segmented) */
+.industry-selector{position:absolute;left:50%;transform:translateX(-50%);top:-32px;display:flex;gap:4px;background:rgba(2,6,23,.45);border:1px solid var(--border);border-radius:10px;padding:4px 6px;backdrop-filter:blur(6px);z-index:5}
+.seg-btn{appearance:none;border:0;background:transparent;color:#cbd5e1;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer}
+.seg-btn.active{background:rgba(148,163,184,.12)}
+
 /* Phone art */
 .phone{display:flex;justify-content:center;position:relative;z-index:auto}
 .phone .phone-screen {
@@ -215,6 +227,11 @@ a:hover{color:#fff}
 .card h3{margin:6px 0 8px}
 .card p{margin:0;color:var(--muted)}
 
+/* Who it’s for grid tweaks */
+.who-cards{grid-template-columns:repeat(4,1fr)}
+.who-cards .card{filter:grayscale(.3);transition:filter .15s ease}
+.who-cards .card:hover{filter:none}
+
 /* Accessibility: focus-visible */
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
 
@@ -268,6 +285,7 @@ a:hover{color:#fff}
   .cards{grid-template-columns:repeat(2,1fr)}
   .kpis{grid-template-columns:repeat(2,1fr)}
   .mf-grid{grid-template-columns:repeat(2,1fr)}
+  .who-cards{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width: 560px){
   .nav-toggle{display:inline-flex;align-self:flex-end;margin-top:4px}
@@ -276,6 +294,8 @@ a:hover{color:#fff}
   .hero h1{font-size:26px}
   .steps,.cards,.kpis{grid-template-columns:1fr}
   .mf-grid{grid-template-columns:1fr}
+  .industry-selector{position:static;transform:none;margin:6px 0 0}
+  .who-cards{grid-template-columns:1fr}
 }
 @media (max-width: 360px){
   .brand .logo{width:84px;height:84px;flex-basis:84px}
