@@ -303,6 +303,20 @@
     const hg = document.getElementById('hg-fg');
     const hgText = document.getElementById('hg-text');
 
+    // Industry selector
+    let industry = 'car';
+    const selector = document.querySelector('.industry-selector');
+    if (selector){
+      selector.querySelectorAll('.seg-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          selector.querySelectorAll('.seg-btn').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed','true');
+          industry = btn.dataset.industry || 'car';
+        });
+      });
+    }
+
     function setHealth(val){
       if (!hg || !hgText) return;
       const circumference = 2 * Math.PI * 52; // r=52
@@ -315,10 +329,14 @@
     let i = 0;
     setInterval(()=>{
       const p = canDataPoints[i % canDataPoints.length];
-      if (fuelEl) fuelEl.textContent = p.fuel.toFixed(1);
-      if (coolantEl) coolantEl.textContent = String(p.coolant);
+      // Apply simple scaling based on selected industry
+      const fuelAdj = industry==='truck' ? 1.35 : industry==='construction' ? 1.15 : industry==='marine' ? 1.05 : 1.0;
+      const coolantAdj = industry==='marine' ? 0.95 : 1.0;
+      const idlePenalty = industry==='construction' ? 1 : 0;
+      if (fuelEl) fuelEl.textContent = (p.fuel * fuelAdj).toFixed(1);
+      if (coolantEl) coolantEl.textContent = String(Math.round(p.coolant * coolantAdj));
       if (voltEl) voltEl.textContent = String(p.voltage);
-      if (scoreEl) scoreEl.textContent = String(92 - (p.brake? 3:0) - Math.max(0, Math.abs(p.steering)-5));
+      if (scoreEl) scoreEl.textContent = String(92 - (p.brake? 3:0) - Math.max(0, Math.abs(p.steering)-5) - idlePenalty);
       if (voltStatusEl){
         const stable = p.voltage > 13.2 && p.voltage < 14.5;
         voltStatusEl.textContent = stable ? 'Stable' : 'Check';
