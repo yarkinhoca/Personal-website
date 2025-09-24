@@ -14,46 +14,13 @@
   }
 // Minimal interactivity for CanoramIQ site
 (function(){
-  // Phone scroll-hijack: lock page, scroll inside phone, then release
+  // Phone scroll handling: scroll inside phone when possible; let page scroll at edges
   function initPhoneScrollHijack(){
     const section = document.getElementById('phone-scroll-section');
-    const container = section?.querySelector('.phone-scroll-container');
-  const pager = section?.querySelector('.phone-pager');
+    const container = section ? section.querySelector('.phone-scroll-container') : null;
+  const pager = section ? section.querySelector('.phone-pager') : null;
   const dots = pager ? Array.from(pager.querySelectorAll('.pager-dot')) : [];
     if (!section || !container) return;
-
-  let hijacking = false;
-  let cooldownUntil = 0; // avoid instant re-hijack after release
-
-    function inViewport(el){
-      const r = el.getBoundingClientRect();
-      return r.top <= 80 && r.bottom >= (r.height * 0.6);
-    }
-
-    function lock(){
-      if (hijacking) return;
-      hijacking = true;
-      document.body.style.overflow = 'hidden';
-      // Start on the first page when entering
-      if (container.scrollTop < 4) container.scrollTo({ top: 0, behavior: 'auto' });
-    }
-
-    function release(){
-      if (!hijacking) return;
-      hijacking = false;
-      document.body.style.overflow = '';
-      cooldownUntil = performance.now() + 600; // ms
-    }
-
-    function onScroll(){
-      if (performance.now() < cooldownUntil) return;
-      if (!hijacking && inViewport(section)){
-        lock();
-      } else if (hijacking && !inViewport(section)){
-        release();
-      }
-    }
-
     function atEnd(){
       return Math.ceil(container.scrollTop + container.clientHeight) >= container.scrollHeight;
     }
@@ -61,48 +28,34 @@
       return container.scrollTop <= 0;
     }
 
-    // wheel/scroll -> route into container when hijacking
-    window.addEventListener('wheel', (e)=>{
-      if (!hijacking) return;
+    // Wheel handling only inside the phone container
+    container.addEventListener('wheel', (e)=>{
       const dy = e.deltaY;
+      if (dy === 0) return;
       const goingDown = dy > 0;
-      const goingUp = dy < 0;
-      if ((goingDown && !atEnd()) || (goingUp && !atStart())){
+      const canScrollDown = !atEnd();
+      const canScrollUp = !atStart();
+      if ((goingDown && canScrollDown) || (!goingDown && canScrollUp)){
         e.preventDefault();
         container.scrollBy({ top: dy, behavior: 'auto' });
-      } else {
-        // We are at an edge; release and forward remaining scroll to page
-        e.preventDefault();
-        const remain = dy;
-        release();
-        window.scrollBy({ top: remain, behavior: 'auto' });
-      }
+      } // else: let page handle it by not preventing default
     }, { passive:false });
 
-    // touch
+    // Touch handling only inside the phone container
     let lastY = 0;
-    window.addEventListener('touchstart', (e)=>{ if (hijacking) lastY = e.touches[0].clientY; }, { passive:true });
-    window.addEventListener('touchmove', (e)=>{
-      if (!hijacking) return;
+    container.addEventListener('touchstart', (e)=>{ lastY = e.touches[0].clientY; }, { passive:true });
+    container.addEventListener('touchmove', (e)=>{
       const y = e.touches[0].clientY;
-      const dy = lastY - y; // positive when moving up
+      const dy = lastY - y; // positive scrolls down
       lastY = y;
-      const goingDown = dy > 0; // content moves up
-      const goingUp = dy < 0;
-      if ((goingDown && !atEnd()) || (goingUp && !atStart())){
-        container.scrollBy({ top: dy, behavior: 'auto' });
+      const goingDown = dy > 0;
+      const canScrollDown = !atEnd();
+      const canScrollUp = !atStart();
+      if ((goingDown && canScrollDown) || (!goingDown && canScrollUp)){
         e.preventDefault();
-      } else {
-        // At an edge: release and let page consume gesture
-        release();
-        // Allow this event to bubble to page scroll; don't preventDefault
-      }
+        container.scrollBy({ top: dy, behavior: 'auto' });
+      } // else: allow page to consume
     }, { passive:false });
-
-    // Sync hijack state on native scroll as well
-    window.addEventListener('scroll', onScroll, { passive:true });
-    // Make sure lock state matches initial position
-    onScroll();
 
     // Snap-to-panel behavior and pager sync
     let snapTimer;
@@ -115,8 +68,12 @@
       syncPager();
       clearTimeout(snapTimer);
       snapTimer = setTimeout(()=>{
-        const idx = Math.round(container.scrollTop / container.clientHeight);
-        container.scrollTo({ top: idx * container.clientHeight, behavior: 'smooth' });
+        const h = container.clientHeight;
+        const idx = Math.max(0, Math.min(2, Math.round(container.scrollTop / h))); // clamp to 0..2
+        const target = idx * h;
+        if (Math.abs(container.scrollTop - target) > 2){
+          container.scrollTo({ top: target, behavior: 'smooth' });
+        }
       }, 120);
     }, { passive:true });
     dots.forEach((dot)=>{
@@ -390,7 +347,8 @@
     animateKPI('kpi-score', 80, 92, '');
 
     // Animated fuel economy chart
-    const ctx = document.getElementById('fuelChart')?.getContext('2d');
+  const chartEl = document.getElementById('fuelChart');
+  const ctx = chartEl ? chartEl.getContext('2d') : null;
     if (!ctx) return;
     if (prefersReduced){
       // Draw static chart frame only
