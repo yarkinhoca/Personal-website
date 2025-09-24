@@ -31,45 +31,59 @@
       return container.scrollTop <= EPS;
     }
 
-    // Wheel handling only inside the phone container (with edge snapping)
+    // Jump-per-gesture navigation
+    let animating = false;
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function goTo(index){
+      const h = container.clientHeight;
+      const targetIdx = Math.max(0, Math.min(lastIndex, index));
+      if (animating) return;
+      animating = true;
+      container.scrollTo({ top: targetIdx * h, behavior: prefersReduced ? 'auto' : 'smooth' });
+      // Fallback cooldown; scrollend not fully supported everywhere
+      const duration = prefersReduced ? 80 : 420;
+      setTimeout(()=>{ animating = false; }, duration);
+    }
+
+    // Wheel: one panel per gesture
     container.addEventListener('wheel', (e)=>{
       const dy = e.deltaY;
       if (dy === 0) return;
       const h = container.clientHeight;
       const idx = Math.round(container.scrollTop / h);
       const goingDown = dy > 0;
-      const canScrollDown = !atEnd();
-      const canScrollUp = !atStart();
-      if ((goingDown && canScrollDown) || (!goingDown && canScrollUp)){
+      if (goingDown && idx < lastIndex){
         e.preventDefault();
-        container.scrollBy({ top: dy, behavior: 'auto' });
-      } else {
-        const next = Math.max(0, Math.min(lastIndex, idx + (goingDown ? 1 : -1)));
-        if (next !== idx){
-          e.preventDefault();
-          container.scrollTo({ top: next * h, behavior: 'smooth' });
-        }
-      }
+        goTo(idx + 1);
+      } else if (!goingDown && idx > 0){
+        e.preventDefault();
+        goTo(idx - 1);
+      } // else: let page scroll
     }, { passive:false });
 
-    // Touch handling only inside the phone container
-    let lastY = 0;
-    container.addEventListener('touchstart', (e)=>{ lastY = e.touches[0].clientY; }, { passive:true });
+    // Touch swipe: decide on touchend based on total delta
+    let touchStartY = 0;
+    let touchDy = 0;
+    container.addEventListener('touchstart', (e)=>{ touchStartY = e.touches[0].clientY; touchDy = 0; }, { passive:true });
     container.addEventListener('touchmove', (e)=>{
       const y = e.touches[0].clientY;
-      const dy = lastY - y; // positive scrolls down
-      lastY = y;
-      const goingDown = dy > 0;
-      const canScrollDown = !atEnd();
-      const canScrollUp = !atStart();
-      if ((goingDown && canScrollDown) || (!goingDown && canScrollUp)){
-        e.preventDefault();
-        container.scrollBy({ top: dy, behavior: 'auto' });
-      } // else: allow page to consume
+      touchDy = touchStartY - y; // positive = swipe up
+      if (Math.abs(touchDy) > 20) e.preventDefault(); // suppress accidental scroll
     }, { passive:false });
+    container.addEventListener('touchend', ()=>{
+      const h = container.clientHeight;
+      const idx = Math.round(container.scrollTop / h);
+      const threshold = 40; // px
+      if (Math.abs(touchDy) < threshold) return; // ignore small swipes
+      if (touchDy > 0 && idx < lastIndex){
+        goTo(idx + 1);
+      } else if (touchDy < 0 && idx > 0){
+        goTo(idx - 1);
+      }
+      touchDy = 0;
+    }, { passive:true });
 
-    // Snap-to-panel behavior and pager sync
-    let snapTimer;
+    // Pager sync only (no auto-snap)
     function syncPager(){
       if (!dots.length) return;
       const idx = Math.round(container.scrollTop / container.clientHeight);
@@ -77,22 +91,13 @@
     }
     container.addEventListener('scroll', ()=>{
       syncPager();
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(()=>{
-        const h = container.clientHeight;
-        const idx = Math.max(0, Math.min(lastIndex, Math.round(container.scrollTop / h)));
-        const target = idx * h;
-        if (Math.abs(container.scrollTop - target) > EPS){
-          container.scrollTo({ top: target, behavior: 'smooth' });
-        }
-      }, 120);
     }, { passive:true });
     dots.forEach((dot)=>{
       dot.addEventListener('click', ()=>{
         const idx = Number(dot.dataset.index||0);
         const h = container.clientHeight;
         const clamped = Math.max(0, Math.min(lastIndex, idx));
-        container.scrollTo({ top: clamped * h, behavior: 'smooth' });
+        goTo(clamped);
       });
     });
 
