@@ -21,24 +21,35 @@
   const pager = section ? section.querySelector('.phone-pager') : null;
   const dots = pager ? Array.from(pager.querySelectorAll('.pager-dot')) : [];
     if (!section || !container) return;
+    const panels = Array.from(container.querySelectorAll('.screen-panel'));
+    const lastIndex = Math.max(0, panels.length - 1);
+    const EPS = 2; // px tolerance for floating rounding
     function atEnd(){
-      return Math.ceil(container.scrollTop + container.clientHeight) >= container.scrollHeight;
+      return container.scrollTop >= container.scrollHeight - container.clientHeight - EPS;
     }
     function atStart(){
-      return container.scrollTop <= 0;
+      return container.scrollTop <= EPS;
     }
 
-    // Wheel handling only inside the phone container
+    // Wheel handling only inside the phone container (with edge snapping)
     container.addEventListener('wheel', (e)=>{
       const dy = e.deltaY;
       if (dy === 0) return;
+      const h = container.clientHeight;
+      const idx = Math.round(container.scrollTop / h);
       const goingDown = dy > 0;
       const canScrollDown = !atEnd();
       const canScrollUp = !atStart();
       if ((goingDown && canScrollDown) || (!goingDown && canScrollUp)){
         e.preventDefault();
         container.scrollBy({ top: dy, behavior: 'auto' });
-      } // else: let page handle it by not preventing default
+      } else {
+        const next = Math.max(0, Math.min(lastIndex, idx + (goingDown ? 1 : -1)));
+        if (next !== idx){
+          e.preventDefault();
+          container.scrollTo({ top: next * h, behavior: 'smooth' });
+        }
+      }
     }, { passive:false });
 
     // Touch handling only inside the phone container
@@ -69,9 +80,9 @@
       clearTimeout(snapTimer);
       snapTimer = setTimeout(()=>{
         const h = container.clientHeight;
-        const idx = Math.max(0, Math.min(2, Math.round(container.scrollTop / h))); // clamp to 0..2
+        const idx = Math.max(0, Math.min(lastIndex, Math.round(container.scrollTop / h)));
         const target = idx * h;
-        if (Math.abs(container.scrollTop - target) > 2){
+        if (Math.abs(container.scrollTop - target) > EPS){
           container.scrollTo({ top: target, behavior: 'smooth' });
         }
       }, 120);
@@ -79,9 +90,13 @@
     dots.forEach((dot)=>{
       dot.addEventListener('click', ()=>{
         const idx = Number(dot.dataset.index||0);
-        container.scrollTo({ top: idx * container.clientHeight, behavior: 'smooth' });
+        const h = container.clientHeight;
+        const clamped = Math.max(0, Math.min(lastIndex, idx));
+        container.scrollTo({ top: clamped * h, behavior: 'smooth' });
       });
     });
+
+    // (single wheel handler above covers edge jumping)
   }
   initPhoneScrollHijack();
   const yearEl = document.getElementById('year');
