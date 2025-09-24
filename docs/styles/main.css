@@ -85,7 +85,7 @@ a:hover{color:#fff}
 #phone-scroll-section .phone-scroll-fixed{position:sticky;top:80px}
 #phone-scroll-section .phone{margin:0 auto}
 #phone-scroll-section .phone-screen{height:600px}
-#phone-scroll-section .phone-scroll-container{height:100%;overflow-y:auto;scroll-snap-type:y mandatory}
+#phone-scroll-section .phone-scroll-container{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scroll-snap-stop:always;-webkit-overflow-scrolling:touch}
 #phone-scroll-section .screen-panel{height:100%;scroll-snap-align:start}
 /* Pager inside phone */
 .phone .phone-pager{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:5;padding:6px 10px;background:rgba(2,6,23,.45);border:1px solid var(--border);border-radius:999px;backdrop-filter:blur(4px)}
@@ -113,6 +113,18 @@ a:hover{color:#fff}
 .industry-icons{display:flex;gap:12px;margin:12px 0 6px;color:#94a3b8}
 .industry-icons .ii-item{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(148,163,184,.06);border:1px solid var(--border);transition:filter .15s ease}
 .industry-icons .ii-item:hover{filter:brightness(1.2)}
+.industry-icons .ii-item{position:relative}
+.industry-icons .ii-item:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.industry-icons .ii-item::after{
+  content: attr(data-label);
+  position:absolute;left:50%;bottom:-6px;transform:translate(-50%,100%);
+  background:rgba(2,6,23,.85);border:1px solid var(--border);color:#cbd5e1;
+  font-size:11px;font-weight:600;padding:4px 6px;border-radius:6px;white-space:nowrap;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  opacity:0;pointer-events:none;transition:opacity .12s ease;
+}
+.industry-icons .ii-item:hover::after,
+.industry-icons .ii-item:focus::after{opacity:1}
 .industry-pills{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:6px 0 0;padding:0}
 .industry-pills li{font-size:12px;color:#94a3b8;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.06)}
 
