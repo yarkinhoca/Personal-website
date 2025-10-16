@@ -295,13 +295,15 @@ a:hover{color:#fff}
   margin: 12px auto 0;
 }
 .promo-media{
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #0b1220;
-  border-radius: 14px;
-  box-shadow: 0 14px 40px rgba(2,6,23,.35), inset 0 0 0 1px rgba(148,163,184,.12);
-  outline: none;
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  min-height:220px; /* fallback for older browsers */
+  background:#0b1220;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.35), inset 0 0 0 1px rgba(148,163,184,.12);
+  outline:none;
 }
 .promo-media:focus-visible{
   box-shadow: 0 0 0 3px rgba(34,211,238,.45), 0 14px 40px rgba(2,6,23,.35);
