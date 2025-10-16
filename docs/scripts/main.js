@@ -1,3 +1,4 @@
+
 // Slide-in animation on scroll
   function initSlideInAnimations() {
     const slideEls = document.querySelectorAll('.slide-in');
