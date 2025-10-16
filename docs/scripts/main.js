@@ -1,4 +1,4 @@
-  // Slide-in animation on scroll
+// Slide-in animation on scroll
   function initSlideInAnimations() {
     const slideEls = document.querySelectorAll('.slide-in');
     function onScroll() {
@@ -329,14 +329,16 @@
   // Wait for Leaflet to load (defer) then init
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-  initDriveMap();
-  initAnimatedData();
-  initSlideInAnimations();
+      initDriveMap();
+      initAnimatedData();
+      initSlideInAnimations();
+      initPromoVideo(); // added
     });
   } else {
-  initDriveMap();
-  initAnimatedData();
-  initSlideInAnimations();
+    initDriveMap();
+    initAnimatedData();
+    initSlideInAnimations();
+    initPromoVideo(); // added
   }
 
   // Animated Data Visualization
@@ -419,5 +421,32 @@
       }
     }
     drawChart();
+  }
+
+  // Promo video: play when visible, pause when off‑screen; honor reduced motion
+  function initPromoVideo(){
+    const vid = document.getElementById('promo-video');
+    if (!vid) return;
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    vid.muted = true;
+
+    function tryPlay(){
+      if (!prefersReduced) { vid.play().catch(()=>{}); }
+    }
+
+    if ('IntersectionObserver' in window){
+      const io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) tryPlay();
+          else vid.pause();
+        });
+      }, { threshold: 0.5 });
+      io.observe(vid);
+    }
+
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) vid.pause();
+      else tryPlay();
+    });
   }
 })();
