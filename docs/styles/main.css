@@ -101,7 +101,11 @@ a:hover{color:#fff}
 .health-gauge{display:flex;align-items:center;justify-content:center;margin:4px 0 10px}
 .hg-svg{width:120px;height:120px}
 .hg-bg{fill:none;stroke:#1c263a;stroke-width:10}
-.hg-fg{fill:none;stroke:#22d3ee;stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;stroke-dasharray:326.72;stroke-dashoffset=32.67}
+.hg-fg{
+  fill:none;stroke:#22d3ee;stroke-width:10;stroke-linecap:round;
+  transform:rotate(-90deg);transform-origin:50% 50%;
+  stroke-dasharray:326.72;stroke-dashoffset:32.67
+}
 .hg-text{font-size:22px;font-weight:800;fill:#e2e8f0;text-anchor:middle;dominant-baseline:middle}
 .hg-sub{font-size:10px;font-weight:600;fill:#94a3b8;text-anchor:middle;dominant-baseline:middle}
 .lead{font-size:18px;color:var(--muted);margin:0 0 16px}
