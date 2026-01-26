@@ -1,4 +1,3 @@
-
 // Slide-in animation on scroll
   function initSlideInAnimations() {
     const slideEls = document.querySelectorAll('.slide-in');
@@ -12,6 +11,40 @@
     }
     window.addEventListener('scroll', onScroll);
     onScroll();
+  }
+  function initCountUp() {
+    const els = Array.from(document.querySelectorAll('[data-count]'));
+    if (!els.length) return;
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const run = (el) => {
+      const target = Number(el.dataset.count || 0);
+      if (prefersReduced) {
+        el.textContent = String(Math.round(target));
+        return;
+      }
+      const duration = 900;
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const value = Math.round(target * progress);
+        el.textContent = String(value);
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            run(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.6 });
+      els.forEach(el => io.observe(el));
+    } else {
+      els.forEach(run);
+    }
   }
 // Minimal interactivity for CanoramIQ site
 (function(){
@@ -333,12 +366,14 @@
       initDriveMap();
       initAnimatedData();
       initSlideInAnimations();
+      initCountUp();
       initPromoVideo(); // added
     });
   } else {
     initDriveMap();
     initAnimatedData();
     initSlideInAnimations();
+    initCountUp();
     initPromoVideo(); // added
   }
 
