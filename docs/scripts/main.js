@@ -472,6 +472,53 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   }
+  // ── Animate KPI score bars on scroll ──
+  function initKScoreBars() {
+    const bars = document.querySelectorAll('.kscore-bar[data-score]');
+    if (!bars.length || !('IntersectionObserver' in window)) {
+      bars.forEach(b => { b.style.width = b.dataset.score + '%'; });
+      return;
+    }
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          if (prefersReduced) {
+            bar.style.width = bar.dataset.score + '%';
+          } else {
+            requestAnimationFrame(() => { bar.style.width = bar.dataset.score + '%'; });
+          }
+          io.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.2 });
+    bars.forEach(b => io.observe(b));
+  }
+  initKScoreBars();
+
+  // ── Animate operating mix bars on scroll ──
+  function initOpmixBars() {
+    const fills = document.querySelectorAll('.opmix-fill');
+    if (!fills.length || !('IntersectionObserver' in window)) return;
+    // stash the target widths then zero them out until visible
+    fills.forEach(f => { f._targetW = f.style.width; f.style.width = '0%'; });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const container = entry.target;
+          container.querySelectorAll('.opmix-fill').forEach((f, i) => {
+            setTimeout(() => { f.style.width = f._targetW; }, i * 120);
+          });
+          io.unobserve(container);
+        }
+      });
+    }, { threshold: 0.3 });
+    const wrap = document.querySelector('.ss-card--mix');
+    if (wrap) io.observe(wrap);
+  }
+  initOpmixBars();
+
   initReveal();
 
   // ── Header scroll shadow ──
