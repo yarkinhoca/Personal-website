@@ -49,6 +49,7 @@
             <li><a href="#how">How it works</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#kpis">KPIs</a></li>
+            <li><a href="#sample-report">Live Report</a></li>
             <li><a href="#benefits">Benefits</a></li>
             <li><a href="#model-free">Model‑free</a></li>
             <li><a href="#smart">Smart platform</a></li>
@@ -246,26 +247,7 @@
         </div>
       </section> <!-- end phone-scroll-section -->
 
-      <section id="promo" class="section">
-  <div class="container">
-    <figure class="promo-video">
-      <video
-        id="promo-video"
-        class="promo-media"
-        playsinline
-        muted
-        controls
-        preload="metadata"
-        width="1280"
-        height="720"
-        src="./docs/canoramiq_promo.mp4?v=2025-10-21"
-      >
-        Sorry, your browser does not support embedded videos.
-      </video>
-      <figcaption class="muted">In‑app walkthrough (mute/unmute to hear sound).</figcaption>
-    </figure>
-  </div>
-</section>
+
 
       <!-- How it works -->
       <section id="how" class="section alt">
@@ -369,6 +351,251 @@
           <p class="muted">Metrics vary by vehicle and dataset; outlier scoring via Isolation Forest adapts to your conditions.</p>
         </div>
       </section>
+
+      <!-- ═══ Live Sample Report ═══ -->
+      <section id="sample-report" class="section">
+        <div class="container">
+
+          <!-- Compliance strip -->
+          <div class="compliance-strip" aria-label="Standards compliance">
+            <div class="cs-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="cs-std">SAE J1939</span>
+              <span class="cs-desc">Heavy‑duty CAN 250/500 kbit/s</span>
+            </div>
+            <div class="cs-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="cs-std">ISO 15765‑4</span>
+              <span class="cs-desc">CAN‑based OBD‑II diagnostic transport</span>
+            </div>
+            <div class="cs-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="cs-std">ISO 16750</span>
+              <span class="cs-desc">Road vehicle electrical system requirements</span>
+            </div>
+            <div class="cs-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="cs-std">SAE J1979</span>
+              <span class="cs-desc">OBD‑II on‑board diagnostic services</span>
+            </div>
+          </div>
+
+          <div class="sr-header">
+            <div>
+              <h2>Real drive report — straight from the app</h2>
+              <p class="muted">This is an actual report generated from a real drive. CanoramIQ connected to the vehicle over Bluetooth, recorded thousands of data points in the background, and automatically produced a full health summary — no wires, no workshop visit, no technical knowledge needed.</p>
+            </div>
+          </div>
+
+          <!-- Session stats row -->
+          <div class="session-stats-grid">
+            <div class="ss-card">
+              <div class="ss-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="ss-label">Session duration</div>
+              <div class="ss-value">131 <span class="ss-unit">s</span></div>
+            </div>
+            <div class="ss-card">
+              <div class="ss-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div class="ss-label">Data points recorded</div>
+              <div class="ss-value">4,351</div>
+            </div>
+            <div class="ss-card">
+              <div class="ss-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M5 12l2-4h10l2 4"/><circle cx="7" cy="15" r="2"/><circle cx="17" cy="15" r="2"/></svg>
+              </div>
+              <div class="ss-label">Avg / Max speed</div>
+              <div class="ss-value">60.7 <span class="ss-unit">km/h</span> <span class="ss-sep">/</span> 117 <span class="ss-unit">km/h</span></div>
+            </div>
+            <div class="ss-card">
+              <div class="ss-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              </div>
+              <div class="ss-label">Peak RPM</div>
+              <div class="ss-value">6,080 <span class="ss-unit">rpm</span></div>
+            </div>
+            <div class="ss-card">
+              <div class="ss-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="ss-label">Distance covered</div>
+              <div class="ss-value">2.20 <span class="ss-unit">km</span></div>
+            </div>
+            <div class="ss-card ss-card--mix">
+              <div class="ss-label ss-label--top">Operating mix</div>
+              <div class="opmix-bars">
+                <div class="opmix-row"><span>Cruise</span><div class="opmix-track"><div class="opmix-fill opmix-fill--cruise" style="width:53.6%"></div></div><span class="opmix-pct">53.6%</span></div>
+                <div class="opmix-row"><span>High load</span><div class="opmix-track"><div class="opmix-fill opmix-fill--load" style="width:31.5%"></div></div><span class="opmix-pct">31.5%</span></div>
+                <div class="opmix-row"><span>Low speed</span><div class="opmix-track"><div class="opmix-fill opmix-fill--low" style="width:12.3%"></div></div><span class="opmix-pct">12.3%</span></div>
+                <div class="opmix-row"><span>Other</span><div class="opmix-track"><div class="opmix-fill opmix-fill--other" style="width:2.6%"></div></div><span class="opmix-pct">2.6%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI score bars -->
+          <h3 class="sr-sub-heading">How did this drive score?</h3>
+          <p class="muted" style="margin-bottom:18px">CanoramIQ breaks every drive into key health areas. Each score runs from 0 to 100 — the higher the better. Scores are compared against a large reference dataset so you always know where you stand.</p>
+
+          <div class="kpi-score-grid">
+            <!-- Engine health -->
+            <div class="kscore-card watch">
+              <div class="kscore-top">
+                <span class="kscore-name">Engine health</span>
+                <span class="kscore-badge badge-watch">Watch</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="69.6" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">69.6</span><span class="kscore-note">Fuel mix and engine smoothness are pulling the score down</span></div>
+            </div>
+            <!-- Throttle coupling -->
+            <div class="kscore-card excellent">
+              <div class="kscore-top">
+                <span class="kscore-name">Throttle coupling</span>
+                <span class="kscore-badge badge-excellent">Excellent</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="96.0" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">96.0</span><span class="kscore-note">Your foot and the engine are perfectly in sync</span></div>
+            </div>
+            <!-- Boost control -->
+            <div class="kscore-card needs-attention">
+              <div class="kscore-top">
+                <span class="kscore-name">Boost control</span>
+                <span class="kscore-badge badge-needs">Needs Attention</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="59.6" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">59.6</span><span class="kscore-note">Engine took longer than expected to reach full power</span></div>
+            </div>
+            <!-- AFR control -->
+            <div class="kscore-card needs-attention">
+              <div class="kscore-top">
+                <span class="kscore-name">AFR control</span>
+                <span class="kscore-badge badge-needs">Needs Attention</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="21.4" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">21.4</span><span class="kscore-note">Engine is running slightly rich — fuel mix needs attention</span></div>
+            </div>
+            <!-- Knock safety -->
+            <div class="kscore-card excellent">
+              <div class="kscore-top">
+                <span class="kscore-name">Knock safety</span>
+                <span class="kscore-badge badge-excellent">Excellent</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="94.1" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">94.1</span><span class="kscore-note">Engine knock detected but stayed comfortably within safe limits</span></div>
+            </div>
+            <!-- Fuel pressure -->
+            <div class="kscore-card watch">
+              <div class="kscore-top">
+                <span class="kscore-name">Fuel pressure</span>
+                <span class="kscore-badge badge-watch">Watch</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="62.3" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">62.3</span><span class="kscore-note">Fuel delivery showed occasional drops — worth keeping an eye on</span></div>
+            </div>
+            <!-- Fuel trim bias -->
+            <div class="kscore-card excellent">
+              <div class="kscore-top">
+                <span class="kscore-name">Fuel trim bias</span>
+                <span class="kscore-badge badge-excellent">Excellent</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="90.3" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">90.3</span><span class="kscore-note">Long-term fuel corrections are well balanced</span></div>
+            </div>
+            <!-- Fuel trim stability -->
+            <div class="kscore-card good">
+              <div class="kscore-top">
+                <span class="kscore-name">Fuel trim stability</span>
+                <span class="kscore-badge badge-good">Good</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="88.3" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">88.3</span><span class="kscore-note">Fuel adjustments were steady and consistent throughout the drive</span></div>
+            </div>
+            <!-- Combustion stability -->
+            <div class="kscore-card needs-attention">
+              <div class="kscore-top">
+                <span class="kscore-name">Combustion stability</span>
+                <span class="kscore-badge badge-needs">Needs Attention</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="0" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">0.0</span><span class="kscore-note">Engine speed was irregular — could point to rough running or a misfire</span></div>
+            </div>
+            <!-- Transient response -->
+            <div class="kscore-card good">
+              <div class="kscore-top">
+                <span class="kscore-name">Transient response</span>
+                <span class="kscore-badge badge-good">Good</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="87.4" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">87.4</span><span class="kscore-note">Engine responded quickly and smoothly when accelerating</span></div>
+            </div>
+            <!-- Electrical stability -->
+            <div class="kscore-card excellent">
+              <div class="kscore-top">
+                <span class="kscore-name">Electrical stability</span>
+                <span class="kscore-badge badge-excellent">Excellent</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="100" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">100.0</span><span class="kscore-note">Battery and charging system were rock solid the entire drive</span></div>
+            </div>
+            <!-- Idle stability -->
+            <div class="kscore-card needs-attention">
+              <div class="kscore-top">
+                <span class="kscore-name">Idle stability</span>
+                <span class="kscore-badge badge-needs">Needs Attention</span>
+              </div>
+              <div class="kscore-bar-wrap"><div class="kscore-bar" data-score="40.0" style="width:0%"></div></div>
+              <div class="kscore-meta"><span class="kscore-num">40.0</span><span class="kscore-note">No idle time recorded — an unusual pattern was flagged at low engine speed</span></div>
+            </div>
+          </div>
+
+          <!-- Insight callouts -->
+          <h3 class="sr-sub-heading" style="margin-top:36px">What your vehicle is telling you</h3>
+          <div class="eng-grid">
+            <div class="eng-card eng-card--warn">
+              <div class="eng-icon" aria-hidden="true">⚡</div>
+              <h4>Slow to reach full power</h4>
+              <p>During hard acceleration the engine was noticeably slow to build full power, and in some cases overshot the target. This is something a mechanic can investigate — it often comes down to a boost sensor or a small solenoid that controls how quickly power ramps up.</p>
+            </div>
+            <div class="eng-card eng-card--warn">
+              <div class="eng-icon" aria-hidden="true">🌡️</div>
+              <h4>Fuel mix needs a tune-up</h4>
+              <p>The engine was running slightly richer than optimal — meaning it was using a touch more fuel than necessary. This is a known sign of a sensor that may be ageing or injectors that need a clean. Left unchecked it can affect fuel economy and emissions.</p>
+            </div>
+            <div class="eng-card eng-card--info">
+              <div class="eng-icon" aria-hidden="true">🔋</div>
+              <h4>Electrical system — rock solid</h4>
+              <p>The battery and alternator performed flawlessly throughout the entire drive. Voltage stayed steady the whole time with no dips or spikes detected. Your charging system is in excellent health — no action needed.</p>
+            </div>
+            <div class="eng-card eng-card--info">
+              <div class="eng-icon" aria-hidden="true">🎯</div>
+              <h4>Engine knock — nothing to worry about</h4>
+              <p>A small number of knock events were detected but the engine managed them automatically and safely each time. This is normal behaviour for a performance engine under load. No signs of any harmful or sustained knock — you're good to go.</p>
+            </div>
+            <div class="eng-card eng-card--bad">
+              <div class="eng-icon" aria-hidden="true">📉</div>
+              <h4>Engine running rough — worth checking</h4>
+              <p>Engine speed was more erratic than expected during this drive. This kind of pattern can point to a cylinder not firing cleanly, a worn spark plug, or a minor fuelling issue. CanoramIQ flagged it automatically — a quick workshop check is recommended.</p>
+            </div>
+            <div class="eng-card eng-card--good">
+              <div class="eng-icon" aria-hidden="true">✅</div>
+              <h4>Pedal response — spot on</h4>
+              <p>Every time the driver pressed the accelerator, the engine responded instantly and precisely. There was no delay or lag between intention and power delivery. This is a great sign that the throttle and engine management system are working in perfect harmony.</p>
+            </div>
+          </div>
+
+          <!-- Score legend -->
+          <div class="score-legend" aria-label="Score rating guide">
+            <div class="sl-item sl-excellent"><span class="sl-dot"></span><span>Excellent <em>90–100</em></span></div>
+            <div class="sl-item sl-good"><span class="sl-dot"></span><span>Good <em>75–89</em></span></div>
+            <div class="sl-item sl-watch"><span class="sl-dot"></span><span>Watch <em>60–74</em></span></div>
+            <div class="sl-item sl-needs"><span class="sl-dot"></span><span>Needs Attention <em>&lt;60</em></span></div>
+          </div>
+
+        </div>
+      </section>
+      <!-- ═══ End Live Sample Report ═══ -->
 
       <section id="benefits" class="section">
         <div class="container">
