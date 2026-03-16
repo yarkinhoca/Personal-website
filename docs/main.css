@@ -87,27 +87,23 @@ a:hover{color:#fff}
 /* Brand cluster (logo + wordmark) */
 .brand{display:flex;gap:0;align-items:center;justify-content:center;color:#e2e8f0;text-decoration:none;width:100%;background:transparent;border:0;padding:10px 0 0;border-radius:0;box-shadow:none}
 .logo{filter:drop-shadow(0 6px 14px rgba(34,211,238,.25))}
-/* Logo: constrained height, white background removed via invert+screen blend */
+/* Logo: constrained height, transparent background already in PNG */
 .brand .logo{
   display:block;
-  height:80px;
+  height:72px;
   width:auto;
   flex:0 0 auto;
   border-radius:0;
   background:transparent;
   padding:0;
   box-shadow:none;
-  /* invert(1) turns white→black; hue-rotate(180deg) restores approximate hues;
-     saturate boosts vibrancy; screen blend makes black pixels transparent
-     against the dark header so the white background vanishes organically */
-  filter:invert(1) hue-rotate(180deg) saturate(1.2) drop-shadow(0 0 16px rgba(34,211,238,.30));
-  mix-blend-mode:screen;
+  filter:drop-shadow(0 0 14px rgba(34,211,238,.28));
   opacity:.92;
   transition:opacity .2s ease, filter .2s ease;
 }
 .brand:hover .logo{
   opacity:1;
-  filter:invert(1) hue-rotate(180deg) saturate(1.35) drop-shadow(0 0 22px rgba(34,211,238,.50));
+  filter:drop-shadow(0 0 22px rgba(34,211,238,.50));
 }
 .nav-toggle{display:none;background:none;border:0;color:var(--text)}
 .nav{width:100%}
