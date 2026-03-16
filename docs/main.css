@@ -83,15 +83,35 @@ a:hover{color:#fff}
 /* Full-bleed header so logo can span the viewport width */
 .site-header .container{padding:0}
 /* Stack logo on top and nav below across all sizes for a consistent look */
-.header-inner{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;gap:6px}
+.header-inner{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;gap:0}
 /* Brand cluster (logo + wordmark) */
-.brand{display:flex;gap:0;align-items:center;color:#e2e8f0;text-decoration:none;width:100%;background:transparent;border:0;padding:0;border-radius:0;box-shadow:none}
+.brand{display:flex;gap:0;align-items:center;justify-content:center;color:#e2e8f0;text-decoration:none;width:100%;background:transparent;border:0;padding:10px 0 0;border-radius:0;box-shadow:none}
 .logo{filter:drop-shadow(0 6px 14px rgba(34,211,238,.25))}
-/* Ensure the logo fills the left (red) area and text sits to its right (yellow) */
-.brand .logo{display:block;width:100%;height:auto;flex:0 0 auto;border-radius:0;background:transparent;padding:0;box-shadow:none;filter:none}
+/* Logo: constrained height, white background removed via invert+screen blend */
+.brand .logo{
+  display:block;
+  height:80px;
+  width:auto;
+  flex:0 0 auto;
+  border-radius:0;
+  background:transparent;
+  padding:0;
+  box-shadow:none;
+  /* invert(1) turns white→black; hue-rotate(180deg) restores approximate hues;
+     saturate boosts vibrancy; screen blend makes black pixels transparent
+     against the dark header so the white background vanishes organically */
+  filter:invert(1) hue-rotate(180deg) saturate(1.2) drop-shadow(0 0 16px rgba(34,211,238,.30));
+  mix-blend-mode:screen;
+  opacity:.92;
+  transition:opacity .2s ease, filter .2s ease;
+}
+.brand:hover .logo{
+  opacity:1;
+  filter:invert(1) hue-rotate(180deg) saturate(1.35) drop-shadow(0 0 22px rgba(34,211,238,.50));
+}
 .nav-toggle{display:none;background:none;border:0;color:var(--text)}
 .nav{width:100%}
-.nav-list{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;list-style:none;margin:8px 0 0;padding:0}
+.nav-list{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;list-style:none;margin:6px 0 0;padding:6px 0 8px}
 .nav-list a{color:#cbd5e1;text-decoration:none}
 .nav-list a:hover{color:#fff}
 .nav-list a{
