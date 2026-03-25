@@ -10,7 +10,7 @@
     <meta property="og:description" content="Log OBD data per drive cycle, visualize metrics on the map, and detect outliers with Isolation Forest to monitor engine health and performance." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.canoramiq.com/" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#0b1326" />
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/canoramiq_logo.png" sizes="192x192">
   <link rel="apple-touch-icon" href="/canoramiq_logo.png">
@@ -21,7 +21,8 @@
   <meta name="twitter:image" content="https://www.canoramiq.com/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/main.css" />
   <link rel="stylesheet" href="styles/app-buttons.css">
     <!-- Leaflet CSS for real map rendering inside the phone UI -->
@@ -138,15 +139,15 @@
                       <div class="bt-icon-wrap" aria-hidden="true">
                         <!-- Car icon -->
                         <svg class="icon-car" width="112" height="56" viewBox="0 0 128 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect x="12" y="24" width="84" height="18" rx="6" fill="#0f1a2e" stroke="rgba(148,163,184,.35)"/>
-                          <path d="M22 24 L36 16 H78 L92 24" fill="#0f1a2e" stroke="rgba(148,163,184,.35)"/>
-                          <circle cx="30" cy="44" r="7" fill="#101a2a" stroke="#2b3957"/>
-                          <circle cx="84" cy="44" r="7" fill="#101a2a" stroke="#2b3957"/>
+                          <rect x="12" y="24" width="84" height="18" rx="6" fill="#171f33" stroke="rgba(66,71,84,.35)"/>
+                          <path d="M22 24 L36 16 H78 L92 24" fill="#171f33" stroke="rgba(66,71,84,.35)"/>
+                          <circle cx="30" cy="44" r="7" fill="#171f33" stroke="#424754"/>
+                          <circle cx="84" cy="44" r="7" fill="#171f33" stroke="#424754"/>
                         </svg>
                         <!-- Bluetooth badge -->
                         <svg class="icon-bt" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="12" cy="12" r="12" fill="#0b3b46"/>
-                          <path d="M8 7l8 5-8 5V7zm4 5l4 4m-4-4l4-4" stroke="#22d3ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M8 7l8 5-8 5V7zm4 5l4 4m-4-4l4-4" stroke="#adc6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                       </div>
                       <div class="bt-meta">
@@ -207,8 +208,8 @@
                 <button class="pager-dot" aria-label="KPIs" data-index="2"></button>
               </div>
             </div>
-            <div class="phone-info-block" style="margin-top:14px;max-width:220px;background:rgba(15,23,42,0.6);border-radius:8px;padding:7px 10px;box-shadow:0 1px 4px rgba(0,0,0,.06);color:#cbd5e1;font-size:13px;font-weight:500;text-align:center;">
-              <span style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;margin-bottom:2px;"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" style="vertical-align:middle"><circle cx="12" cy="12" r="10" fill="#22d3ee"/><text x="12" y="16" text-anchor="middle" font-size="8" fill="#0f172a" font-family="Inter,Arial,sans-serif">i</text></svg>Data Explorer</span>
+            <div class="phone-info-block" style="margin-top:14px;max-width:220px;background:rgba(23,31,51,0.6);border-radius:8px;padding:7px 10px;box-shadow:0 1px 4px rgba(0,0,0,.06);color:#c2c6d6;font-size:13px;font-weight:500;text-align:center;">
+              <span style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;margin-bottom:2px;"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" style="vertical-align:middle"><circle cx="12" cy="12" r="10" fill="#adc6ff"/><text x="12" y="16" text-anchor="middle" font-size="8" fill="#001a42" font-family="Inter,Arial,sans-serif">i</text></svg>Data Explorer</span>
               <span>Click a map location to view CAN metrics for that drive segment.</span>
             </div>
             <!-- Animated Data Visualization Section -->
@@ -230,7 +231,7 @@
                 </div>
               </div>
               <div class="animated-chart-container slide-in" role="status" aria-live="polite">
-                <canvas id="fuelChart" width="320" height="120" aria-hidden="true" style="background:rgba(15,23,42,0.7);border-radius:12px;box-shadow:0 2px 8px rgba(34,197,94,0.10);"></canvas>
+                <canvas id="fuelChart" width="320" height="120" aria-hidden="true" style="background:rgba(23,31,51,0.7);border-radius:12px;box-shadow:0 2px 8px rgba(74,225,118,0.10);"></canvas>
               </div>
             </section>
             <div class="app-store-buttons" style="display:flex;flex-direction:row;gap:7px;align-items:center;justify-content:center;margin-top:7px;">
@@ -359,22 +360,22 @@
           <!-- Compliance strip -->
           <div class="compliance-strip" aria-label="Standards compliance">
             <div class="cs-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               <span class="cs-std">SAE J1939</span>
               <span class="cs-desc">Heavy‑duty CAN 250/500 kbit/s</span>
             </div>
             <div class="cs-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               <span class="cs-std">ISO 15765‑4</span>
               <span class="cs-desc">CAN‑based OBD‑II diagnostic transport</span>
             </div>
             <div class="cs-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               <span class="cs-std">ISO 16750</span>
               <span class="cs-desc">Road vehicle electrical system requirements</span>
             </div>
             <div class="cs-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
               <span class="cs-std">SAE J1979</span>
               <span class="cs-desc">OBD‑II on‑board diagnostic services</span>
             </div>
@@ -391,35 +392,35 @@
           <div class="session-stats-grid">
             <div class="ss-card">
               <div class="ss-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               </div>
               <div class="ss-label">Session duration</div>
               <div class="ss-value">131 <span class="ss-unit">s</span></div>
             </div>
             <div class="ss-card">
               <div class="ss-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
               </div>
               <div class="ss-label">Data points recorded</div>
               <div class="ss-value">4,351</div>
             </div>
             <div class="ss-card">
               <div class="ss-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M5 12l2-4h10l2 4"/><circle cx="7" cy="15" r="2"/><circle cx="17" cy="15" r="2"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M5 12l2-4h10l2 4"/><circle cx="7" cy="15" r="2"/><circle cx="17" cy="15" r="2"/></svg>
               </div>
               <div class="ss-label">Avg / Max speed</div>
               <div class="ss-value">60.7 <span class="ss-unit">km/h</span> <span class="ss-sep">/</span> 117 <span class="ss-unit">km/h</span></div>
             </div>
             <div class="ss-card">
               <div class="ss-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
               </div>
               <div class="ss-label">Peak RPM</div>
               <div class="ss-value">6,080 <span class="ss-unit">rpm</span></div>
             </div>
             <div class="ss-card">
               <div class="ss-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#adc6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               </div>
               <div class="ss-label">Distance covered</div>
               <div class="ss-value">2.20 <span class="ss-unit">km</span></div>
