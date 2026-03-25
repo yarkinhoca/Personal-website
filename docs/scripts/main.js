@@ -269,12 +269,12 @@
     }
 
     // Draw route
-    const route = L.polyline(canDataPoints.map(p => [p.lat, p.lng]), { color: '#22d3ee', weight: 3, opacity: 0.9 }).addTo(map);
+    const route = L.polyline(canDataPoints.map(p => [p.lat, p.lng]), { color: '#adc6ff', weight: 3, opacity: 0.9 }).addTo(map);
     map.fitBounds(route.getBounds(), { padding: [12, 12] });
 
     // Add start/end markers
-    const startIcon = L.divIcon({ className: 'start-icon', html: '<div style="width:10px;height:10px;border-radius:999px;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25)"></div>' });
-    const endIcon = L.divIcon({ className: 'end-icon', html: '<div style="width:10px;height:10px;border-radius:999px;background:#38bdf8;box-shadow:0 0 0 4px rgba(56,189,248,.25)"></div>' });
+    const startIcon = L.divIcon({ className: 'start-icon', html: '<div style="width:10px;height:10px;border-radius:999px;background:#4ae176;box-shadow:0 0 0 4px rgba(74,225,118,.25)"></div>' });
+    const endIcon = L.divIcon({ className: 'end-icon', html: '<div style="width:10px;height:10px;border-radius:999px;background:#adc6ff;box-shadow:0 0 0 4px rgba(173,198,255,.25)"></div>' });
     L.marker([canDataPoints[0].lat, canDataPoints[0].lng], { icon: startIcon }).addTo(map).bindPopup('Ignition on');
     L.marker([canDataPoints[canDataPoints.length - 1].lat, canDataPoints[canDataPoints.length - 1].lng], { icon: endIcon }).addTo(map).bindPopup('Ignition off');
 
@@ -282,8 +282,8 @@
     canDataPoints.forEach((point, idx) => {
       const marker = L.circleMarker([point.lat, point.lng], {
         radius: 7,
-        color: '#38bdf8',
-        fillColor: '#22d3ee',
+        color: '#adc6ff',
+        fillColor: '#4d8eff',
         fillOpacity: 0.85,
         weight: 2
       }).addTo(map);
@@ -335,7 +335,7 @@
       const dash = circumference * (1 - pct/100);
       hg.style.strokeDashoffset = String(dash);
       hgText.textContent = String(Math.round(pct));
-      hg.style.stroke = pct > 80 ? '#22d3ee' : pct > 60 ? '#38bdf8' : pct > 40 ? '#f59e0b' : '#ef4444';
+      hg.style.stroke = pct > 80 ? '#adc6ff' : pct > 60 ? '#4d8eff' : pct > 40 ? '#f59e0b' : '#ef4444';
     }
     let i = 0;
     setInterval(()=>{
@@ -409,7 +409,7 @@
     if (prefersReduced){
       // Draw static chart frame only
       ctx.clearRect(0, 0, 320, 120);
-      ctx.strokeStyle = '#334155';
+      ctx.strokeStyle = '#424754';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(32, 16); ctx.lineTo(32, 104); ctx.lineTo(310, 104); ctx.stroke();
@@ -421,7 +421,7 @@
     function drawChart() {
       ctx.clearRect(0, 0, 320, 120);
       // Axes
-      ctx.strokeStyle = '#334155';
+      ctx.strokeStyle = '#424754';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(32, 16);
@@ -429,7 +429,7 @@
       ctx.lineTo(310, 104);
       ctx.stroke();
       // Line
-      ctx.strokeStyle = '#22d3ee';
+      ctx.strokeStyle = '#adc6ff';
       ctx.lineWidth = 3;
       ctx.beginPath();
       for (let i = 0; i <= frame; i++) {
@@ -440,7 +440,7 @@
       }
       ctx.stroke();
       // Dots
-      ctx.fillStyle = '#38bdf8';
+      ctx.fillStyle = '#4d8eff';
       for (let i = 0; i <= frame; i++) {
         const x = 32 + (i * 20);
         const y = 104 - ((data[i] - 6.5) * 32);
