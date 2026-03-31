@@ -42,7 +42,7 @@
 .bt-meta{display:flex;flex-direction:column;gap:6px}
 .bt-title{font-weight:700;color:#dae2fd}
 .bt-status{display:flex;align-items:center;gap:8px;color:#4ae176;font-weight:600}
-.bt-status .bt-dot{width:8px;height:8px;border-radius:999px;background:#4ae176;box-shadow:0 0 0 4px rgba(74,225,118,.15);display:inline-block}
+.bt-status .bt-dot{width:8px;height:8px;border-radius:999px;background:#4ae176;box-shadow:0 0 0 4px rgba(74,225,118,.15);display:inline-block;animation:statusPulse 2.4s ease-in-out infinite}
 .bt-voltage{color:#c2c6d6}
 .bt-device{color:#c2c6d6}
 .btn-phone{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;width:100%;padding:10px 12px;border-radius:999px;border:1px solid rgba(66,71,84,.15);background:linear-gradient(135deg,#adc6ff,#4d8eff);color:#001a42;font-weight:700}
@@ -55,8 +55,8 @@
 .kpi-val{color:#dae2fd;font-weight:700}
 .unit{color:#c2c6d6;font-weight:500;margin-left:4px}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:999px;border:1px solid rgba(66,71,84,.18);font-size:11px;font-weight:600}
-.pill-stable{background:rgba(74,225,118,.10);color:#4ae176;border-color:rgba(74,225,118,.25)}
-.pill-good{background:rgba(74,225,118,.10);color:#4ae176;border-color:rgba(74,225,118,.25)}
+.pill-stable{background:rgba(74,225,118,.10);color:#4ae176;border-color:rgba(74,225,118,.25);animation:badgePulse 3s ease-in-out infinite}
+.pill-good{background:rgba(74,225,118,.10);color:#4ae176;border-color:rgba(74,225,118,.25);animation:badgePulse 3s ease-in-out infinite .5s}
 .pill-clean{background:rgba(173,198,255,.10);color:#adc6ff;border-color:rgba(173,198,255,.25)}
 .elm-status {
   text-align: center;
