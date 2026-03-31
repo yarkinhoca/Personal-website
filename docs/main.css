@@ -780,3 +780,153 @@ html { scroll-behavior: smooth; }
   outline-offset: 2px;
   border-radius: 6px;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   "Electric Cinema" CSS-only enhancements
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Pulsing glow on active status indicators ────────────── */
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(74,225,118,.15); }
+  50%      { box-shadow: 0 0 0 8px rgba(74,225,118,.08), 0 0 16px rgba(74,225,118,.12); }
+}
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74,225,118,.0); }
+  50%      { box-shadow: 0 0 12px rgba(74,225,118,.15); }
+}
+
+/* ── 2. Horizontal snap-scroll for card grids on mobile ─────── */
+@media (max-width: 560px) {
+  .cards,
+  .who-cards,
+  .mf-grid,
+  .smart-cards {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: none;          /* Firefox */
+  }
+  .cards::-webkit-scrollbar,
+  .who-cards::-webkit-scrollbar,
+  .mf-grid::-webkit-scrollbar,
+  .smart-cards::-webkit-scrollbar {
+    display: none;                  /* Chrome / Safari */
+  }
+  .cards > .card,
+  .who-cards > .card,
+  .mf-grid > .mf-card,
+  .smart-cards > .card {
+    scroll-snap-align: start;
+    flex: 0 0 82%;
+    min-width: 0;
+  }
+  /* Steps row too */
+  .steps {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .steps::-webkit-scrollbar { display: none; }
+  .steps > .step {
+    scroll-snap-align: start;
+    flex: 0 0 82%;
+    min-width: 0;
+  }
+}
+
+/* ── 3. SVG draw-on animation for health gauge ──────────────── */
+@keyframes gaugeDrawOn {
+  from { stroke-dashoffset: 326.72; }
+}
+.hg-fg {
+  animation: gaugeDrawOn 1.6s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+/* ── 4. Stronger neon glow accents ──────────────────────────── */
+/* Primary button */
+.btn-primary {
+  box-shadow: 0 6px 18px rgba(173,198,255,.22), 0 0 24px rgba(77,142,255,.12);
+  transition: filter .2s ease, box-shadow .25s ease, transform .2s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 28px rgba(173,198,255,.30), 0 0 48px rgba(77,142,255,.14);
+  transform: translateY(-1px);
+}
+
+/* Hero highlights glow on hover */
+.hero-highlights li {
+  transition: box-shadow .25s ease, border-color .25s ease;
+}
+.hero-highlights li:hover {
+  border-color: rgba(173,198,255,.35);
+  box-shadow: 0 0 14px rgba(173,198,255,.10);
+}
+
+/* Compliance badges glow bump */
+.cs-badge {
+  transition: background .2s, box-shadow .25s, border-color .25s;
+}
+.cs-badge:hover {
+  border-color: rgba(173,198,255,.40);
+  box-shadow: 0 0 22px rgba(173,198,255,.18), 0 0 6px rgba(173,198,255,.10);
+}
+
+/* Score bar cards: edge glow matching their color on hover */
+.kscore-card.excellent:hover { box-shadow: 0 0 18px rgba(74,225,118,.14), 0 0 0 1px rgba(74,225,118,.20), var(--shadow-md); }
+.kscore-card.good:hover      { box-shadow: 0 0 18px rgba(173,198,255,.14), 0 0 0 1px rgba(173,198,255,.20), var(--shadow-md); }
+.kscore-card.watch:hover     { box-shadow: 0 0 18px rgba(245,158,11,.14), 0 0 0 1px rgba(245,158,11,.20), var(--shadow-md); }
+.kscore-card.needs-attention:hover { box-shadow: 0 0 18px rgba(239,68,68,.14), 0 0 0 1px rgba(239,68,68,.20), var(--shadow-md); }
+
+/* Engineering insight cards: top-bar glow on hover */
+.eng-card--warn:hover  { box-shadow: 0 0 18px rgba(245,158,11,.12), var(--shadow-md); }
+.eng-card--bad:hover   { box-shadow: 0 0 18px rgba(239,68,68,.12), var(--shadow-md);  }
+.eng-card--good:hover  { box-shadow: 0 0 18px rgba(74,225,118,.12), var(--shadow-md);  }
+.eng-card--info:hover  { box-shadow: 0 0 18px rgba(173,198,255,.12), var(--shadow-md); }
+
+/* Value cards: subtle accent glow */
+.value-card:hover {
+  box-shadow: 0 0 22px rgba(173,198,255,.12), var(--shadow-md);
+}
+
+/* Smart diagram nodes: neon pop on hover */
+.sd-node:hover {
+  box-shadow: 0 0 16px rgba(173,198,255,.18), 0 0 0 1px rgba(173,198,255,.30);
+}
+
+/* ── 5. Scroll-reveal stagger ───────────────────────────────── */
+/* Base: all revealable elements start hidden */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger children for grids (CSS-only via nth-child) */
+.reveal:nth-child(2)  { transition-delay: .08s; }
+.reveal:nth-child(3)  { transition-delay: .16s; }
+.reveal:nth-child(4)  { transition-delay: .24s; }
+.reveal:nth-child(5)  { transition-delay: .32s; }
+.reveal:nth-child(6)  { transition-delay: .40s; }
+.reveal:nth-child(7)  { transition-delay: .48s; }
+.reveal:nth-child(8)  { transition-delay: .56s; }
+.reveal:nth-child(9)  { transition-delay: .64s; }
+.reveal:nth-child(10) { transition-delay: .72s; }
+.reveal:nth-child(11) { transition-delay: .80s; }
+.reveal:nth-child(12) { transition-delay: .88s; }
+
+/* Respect prefers-reduced-motion for ALL new animations */
+@media (prefers-reduced-motion: reduce) {
+  .hg-fg           { animation: none; }
+  .reveal          { opacity: 1; transform: none; transition: none; }
+}
