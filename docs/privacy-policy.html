@@ -364,7 +364,7 @@
                 <ul>
                   <li><strong>Location (GPS):</strong> Used to tag drive routes on the map, correlate telemetry with road segments, and enable geographic outlier analysis. Location access is requested only while the app is in use during an active drive session.</li>
                   <li><strong>Bluetooth:</strong> Required to discover and connect to your ELM327 OBD adapter. We read no other Bluetooth devices.</li>
-                  <li><strong>Accelerometer / Gyroscope (if available):</strong> Used to supplement vehicle motion data for driver-behaviour scoring when GPS or OBD speed signals are momentarily unavailable.</li>
+                  <li><strong>Accelerometer / Gyroscope / Magnetometer (IMU):</strong> CanoramIQ uses the phone's full inertial measurement unit (IMU) for sensor fusion with OBD and GPS data. This enables KPIs such as braking intensity, cornering G-force, road surface quality, suspension health, and driver behaviour scoring. IMU data is processed entirely on-device and is never transmitted to external servers.</li>
                 </ul>
 
                 <p><strong style="color:var(--text);">Account and Contact Information (optional)</strong></p>
