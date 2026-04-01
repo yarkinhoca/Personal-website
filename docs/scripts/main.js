@@ -460,7 +460,7 @@
   // ── Scroll-reveal: fade-up every key element on entry ──
   function initReveal() {
     if (!('IntersectionObserver' in window)) return;
-    const sel = '.card, .step, .mf-card, .kpi, .value-card, .benefit-item, .kscore-card, .eng-card, .ss-card, .cs-badge, .section > .container > h2';
+    const sel = '.card, .step, .mf-card, .kpi, .value-card, .benefit-item, .kscore-card, .eng-card, .ss-card, .cs-badge, .imu-axis-card, .imu-unlock-card, .imu-source, .section > .container > h2';
     document.querySelectorAll(sel).forEach(el => el.classList.add('reveal'));
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
