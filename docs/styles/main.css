@@ -83,7 +83,7 @@ a:hover{color:#fff}
 /* Header */
 /* Header */
 .site-header{position:fixed;top:0;width:100%;z-index:50;background:rgba(11,19,38,.80);backdrop-filter:blur(16px);border-bottom:1px solid rgba(66,71,84,.15);box-shadow:0 4px 24px rgba(0,0,0,.20)}
-#main{padding-top:100px}
+#main{padding-top:140px}
 /* Full-bleed header so logo can span the viewport width */
 .site-header .container{padding:0}
 /* Stack logo on top and nav below across all sizes for a consistent look */
@@ -929,4 +929,389 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   .hg-fg           { animation: none; }
   .reveal          { opacity: 1; transform: none; transition: none; }
+  .imu-ring-anim   { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Section eyebrow labels
+   ═══════════════════════════════════════════════════════════════ */
+.eyebrow {
+  display: inline-block;
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 18px;
+}
+.eyebrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: .7;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   IMU Sensor Fusion Section
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pipeline flow diagram */
+.imu-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 32px 0 40px;
+  flex-wrap: wrap;
+}
+.imu-pipe-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.imu-source {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  min-width: 80px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.imu-source:hover {
+  border-color: rgba(173,198,255,.30);
+  box-shadow: 0 0 14px rgba(173,198,255,.08);
+}
+.imu-source-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(173,198,255,.08);
+  border: 1px solid rgba(173,198,255,.12);
+  color: var(--brand);
+}
+.imu-source span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+.imu-pipe-arrow {
+  display: flex;
+  align-items: center;
+  opacity: .6;
+}
+.imu-fusion-node, .imu-output-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+  min-width: 100px;
+}
+.imu-fusion-node {
+  background: rgba(173,198,255,.06);
+  border: 1px solid rgba(173,198,255,.20);
+  box-shadow: 0 0 24px rgba(173,198,255,.08);
+}
+.imu-fusion-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@keyframes imuRingSpin {
+  to { transform: rotate(360deg); }
+}
+.imu-ring-anim {
+  transform-origin: 50% 50%;
+  animation: imuRingSpin 6s linear infinite;
+}
+.imu-fusion-node span, .imu-output-node span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+.imu-output-node {
+  background: rgba(74,225,118,.06);
+  border: 1px solid rgba(74,225,118,.20);
+  box-shadow: 0 0 24px rgba(74,225,118,.08);
+}
+.imu-output-node span {
+  color: var(--accent);
+}
+
+/* 3‑axis cards */
+.imu-axes-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+.imu-axis-card {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: rgba(45,52,73,.5);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s, box-shadow .25s, border-color .25s;
+}
+.imu-axis-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(173,198,255,.28);
+  box-shadow: 0 0 18px rgba(173,198,255,.10), var(--shadow-md);
+}
+.imu-axis-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.imu-axis-header h3 {
+  font-size: 16px;
+  margin: 0;
+}
+.imu-axis-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  flex-shrink: 0;
+}
+.imu-badge-x {
+  background: rgba(239,68,68,.12);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,.25);
+}
+.imu-badge-y {
+  background: rgba(74,225,118,.10);
+  color: #4ae176;
+  border: 1px solid rgba(74,225,118,.25);
+}
+.imu-badge-z {
+  background: rgba(173,198,255,.10);
+  color: #adc6ff;
+  border: 1px solid rgba(173,198,255,.25);
+}
+.imu-axis-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 12px;
+  opacity: .8;
+}
+
+/* Mini meter bars */
+.imu-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.imu-meter-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(140,144,159,.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.imu-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 1s ease;
+}
+.imu-fill-x { background: linear-gradient(90deg, #ef4444, #f97316); }
+.imu-fill-y { background: linear-gradient(90deg, #4ae176, #86efac); }
+.imu-fill-z { background: linear-gradient(90deg, #adc6ff, #4d8eff); }
+.imu-meter-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+  min-width: 54px;
+  text-align: right;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+/* KPI list inside axis cards */
+.imu-kpis {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.imu-kpis li {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+.imu-kpis li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: .5;
+}
+.imu-kpis li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* "What sensor fusion unlocks" grid */
+.imu-unlock-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.imu-unlock-card {
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: rgba(45,52,73,.5);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s, box-shadow .25s, border-color .25s;
+}
+.imu-unlock-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(74,225,118,.25);
+  box-shadow: 0 0 18px rgba(74,225,118,.10), var(--shadow-md);
+}
+.imu-unlock-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(74,225,118,.06);
+  border: 1px solid rgba(74,225,118,.15);
+  margin-bottom: 10px;
+}
+.imu-unlock-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.imu-unlock-card p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Trust callout */
+.imu-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 32px;
+  padding: 18px 22px;
+  border-radius: var(--radius-lg);
+  background: rgba(74,225,118,.04);
+  border: 1px solid rgba(74,225,118,.18);
+  box-shadow: 0 0 20px rgba(74,225,118,.06);
+}
+.imu-callout-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(74,225,118,.10);
+  border: 1px solid rgba(74,225,118,.22);
+}
+.imu-callout p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.imu-callout p strong {
+  color: var(--accent);
+}
+
+/* IMU section responsive */
+@media (max-width: 960px) {
+  .imu-axes-row      { grid-template-columns: repeat(2, 1fr); }
+  .imu-unlock-grid   { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .imu-axes-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .imu-axes-row::-webkit-scrollbar { display: none; }
+  .imu-axes-row > .imu-axis-card {
+    scroll-snap-align: start;
+    flex: 0 0 85%;
+    min-width: 0;
+  }
+  .imu-unlock-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .imu-unlock-grid::-webkit-scrollbar { display: none; }
+  .imu-unlock-grid > .imu-unlock-card {
+    scroll-snap-align: start;
+    flex: 0 0 85%;
+    min-width: 0;
+  }
+  .imu-pipeline {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .imu-pipe-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .imu-pipe-arrow svg {
+    transform: rotate(90deg);
+  }
 }
