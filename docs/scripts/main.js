@@ -1,16 +1,8 @@
-// Slide-in animation on scroll
+// Slide-in animation on scroll — neutralized; motion.js owns reveals.
+  // Kept as a no-op so existing call sites don't break and content stays visible
+  // even if motion.js fails to load.
   function initSlideInAnimations() {
-    const slideEls = document.querySelectorAll('.slide-in');
-    function onScroll() {
-      slideEls.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 60) {
-          el.classList.add('visible');
-        }
-      });
-    }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
+    document.querySelectorAll('.slide-in').forEach(el => el.classList.add('visible'));
   }
   function initCountUp() {
     const els = Array.from(document.querySelectorAll('[data-count]'));
