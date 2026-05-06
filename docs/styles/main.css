@@ -1241,6 +1241,13 @@ html { scroll-behavior: smooth; }
 .site-header.is-scrolled .brand .logo{height:42px;transition:height .3s ease}
 .brand .logo{transition:height .3s ease}
 
+/* Reveal primitives — only hide elements that motion.js has tagged.
+   If motion.js never runs, these classes are never applied → content stays visible. */
+.fx-reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
+.fx-reveal.fx-shown{opacity:1;transform:none}
+.fx-hero{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.fx-hero.fx-shown{opacity:1;transform:none}
+
 /* Lenis recommended baseline */
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto !important}
