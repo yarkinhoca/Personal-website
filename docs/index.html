@@ -70,6 +70,12 @@
           <p class="lead">CanoramIQ logs every drive—from ignition on to off—over Bluetooth. We pair OBD data with timestamps and GPS, then use Isolation Forest to flag outliers and generate KPIs so you can monitor engine health, fuel economy, and driver performance on a map.</p>
           <div class="cta">
             <a class="btn btn-primary" href="#cta">Join the beta</a>
+            <button type="button" class="btn btn-demo" data-open-demo aria-haspopup="dialog" aria-controls="demo-modal">
+              <span class="btn-demo__play" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+              <span>Watch the demo</span>
+            </button>
             <a class="btn btn-ghost" href="#how">See how it works</a>
           </div>
           <ul class="hero-highlights">
@@ -971,6 +977,31 @@
     <div id="phone-trigger"></div>
     <div id="phone-screen-wrapper">
   <!-- Overlay removed: phone only in hero section -->
+    </div>
+
+    <!-- Demo video modal -->
+    <div id="demo-modal" class="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title" aria-hidden="true" hidden>
+      <div class="demo-modal__backdrop" data-close-demo></div>
+      <div class="demo-modal__dialog" role="document">
+        <header class="demo-modal__header">
+          <div class="demo-modal__titlewrap">
+            <span class="demo-modal__eyebrow">Live demo</span>
+            <h2 id="demo-modal-title" class="demo-modal__title">CanoramIQ in action</h2>
+          </div>
+          <button type="button" class="demo-modal__close" data-close-demo aria-label="Close demo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </header>
+        <div class="demo-modal__media">
+          <video id="demo-modal-video" class="demo-modal__video" controls playsinline preload="metadata" poster="./canoramiq_demo_poster.jpg">
+            <source data-src="./canoramiq_demo_video.mp4" type="video/mp4" />
+            Your browser does not support embedded video.
+          </video>
+        </div>
+        <footer class="demo-modal__footer">
+          <p class="demo-modal__caption">A quick walkthrough of drive logging, KPIs, and the GPS-aware report.</p>
+        </footer>
+      </div>
     </div>
 
     <!-- Leaflet JS -->

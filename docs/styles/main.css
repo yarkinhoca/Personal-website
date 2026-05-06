@@ -90,27 +90,27 @@ a:hover{color:#fff}
 .header-inner{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;gap:0}
 /* Brand cluster (logo + wordmark) */
 .brand{display:flex;gap:0;align-items:center;justify-content:center;color:#dae2fd;text-decoration:none;width:100%;background:transparent;border:0;padding:10px 0 0;border-radius:0;box-shadow:none}
-.logo{filter:drop-shadow(0 6px 14px rgba(173,198,255,.25))}
-/* Logo: constrained height, blended into dark background */
+/* App logo: clear, crisp, with subtle glow that complements the dark header */
 .brand .logo{
   display:block;
-  height:56px;
+  /* Fluid scaling between mobile and desktop */
+  height:clamp(52px, 6.4vw, 76px);
   width:auto;
+  aspect-ratio:1/1;
   flex:0 0 auto;
-  border-radius:0;
+  border-radius:18px;
   background:transparent;
   padding:0;
-  box-shadow:none;
-  filter:brightness(.85) contrast(1.1) drop-shadow(0 0 18px rgba(173,198,255,.32));
-  opacity:.88;
-  mix-blend-mode:lighten;
-  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%, #000 40%, transparent 100%);
-  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 50%, #000 40%, transparent 100%);
-  transition:opacity .25s ease, filter .25s ease;
+  box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 0 1px rgba(173,198,255,.08) inset;
+  filter:drop-shadow(0 0 14px rgba(173,198,255,.28));
+  opacity:1;
+  transform:translateZ(0);
+  transition:transform .25s ease, filter .25s ease, box-shadow .25s ease, height .3s ease;
 }
 .brand:hover .logo{
-  opacity:1;
-  filter:brightness(.90) contrast(1.05) drop-shadow(0 0 22px rgba(173,198,255,.50));
+  transform:translateY(-1px) scale(1.02);
+  filter:drop-shadow(0 0 22px rgba(173,198,255,.55));
+  box-shadow:0 12px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(173,198,255,.18) inset;
 }
 .nav-toggle{display:none;background:none;border:0;color:var(--text)}
 .nav{width:100%}
@@ -739,8 +739,14 @@ html { scroll-behavior: smooth; }
   .industry-selector{position:static;transform:none;margin:6px 0 0}
   .who-cards{grid-template-columns:1fr}
 }
+@media (max-width: 900px){
+  .brand .logo{height:60px;border-radius:16px}
+}
+@media (max-width: 560px){
+  .brand .logo{height:52px;border-radius:14px}
+}
 @media (max-width: 360px){
-  .brand .logo{height:44px;width:auto;flex-basis:auto}
+  .brand .logo{height:46px;width:auto;flex-basis:auto;border-radius:12px}
 }
 
 /* ── Glass-panel & HUD utilities ──────────────────────────── */
@@ -1238,8 +1244,10 @@ html { scroll-behavior: smooth; }
 /* === Motion layer (GSAP + ScrollTrigger + Lenis) === */
 .site-header{transition:background .3s ease, box-shadow .3s ease, padding .3s ease}
 .site-header.is-scrolled{box-shadow:0 6px 30px rgba(0,0,0,.45);background:rgba(11,19,38,.94)}
-.site-header.is-scrolled .brand .logo{height:42px;transition:height .3s ease}
-.brand .logo{transition:height .3s ease}
+.site-header.is-scrolled .brand .logo{height:clamp(42px, 4.6vw, 54px)}
+@media (max-width: 560px){
+  .site-header.is-scrolled .brand .logo{height:42px}
+}
 
 /* Reveal primitives — only hide elements that motion.js has tagged.
    If motion.js never runs, these classes are never applied → content stays visible. */
@@ -1371,4 +1379,133 @@ html.lenis,html.lenis body{height:auto}
   .imu-pipe-arrow svg {
     transform: rotate(90deg);
   }
+}
+
+/* ── Hero CTA: ensure wrap on small screens ───────────────── */
+.hero .cta{flex-wrap:wrap}
+
+/* ── Watch demo button ────────────────────────────────────── */
+.btn-demo{
+  position:relative;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 16px 10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(173,198,255,.35);
+  color:#dae2fd;
+  background:linear-gradient(135deg, rgba(77,142,255,.18), rgba(173,198,255,.06));
+  cursor:pointer;
+  font:inherit;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  font-weight:600;
+  font-size:13px;
+  box-shadow:0 6px 18px rgba(11,19,38,.35), inset 0 0 0 1px rgba(173,198,255,.08);
+  transition:transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.btn-demo:hover{
+  transform:translateY(-1px);
+  border-color:rgba(173,198,255,.6);
+  background:linear-gradient(135deg, rgba(77,142,255,.28), rgba(173,198,255,.12));
+  box-shadow:0 10px 28px rgba(11,19,38,.5), inset 0 0 0 1px rgba(173,198,255,.18);
+}
+.btn-demo:focus-visible{outline:2px solid #adc6ff;outline-offset:3px}
+.btn-demo__play{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:999px;
+  background:linear-gradient(135deg,#adc6ff,#4d8eff);
+  color:#001a42;
+  box-shadow:0 0 0 3px rgba(173,198,255,.18);
+}
+.btn-demo__play svg{margin-left:1px}
+
+/* ── Demo video modal ─────────────────────────────────────── */
+.demo-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:24px}
+.demo-modal[aria-hidden="false"]{display:flex}
+.demo-modal__backdrop{
+  position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 50% 0%, rgba(77,142,255,.18), rgba(11,19,38,.85) 60%, rgba(0,0,0,.92));
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  animation:demo-fade .25s ease both;
+}
+.demo-modal__dialog{
+  position:relative;
+  width:min(520px, 100%);
+  max-height:calc(100vh - 48px);
+  display:flex;flex-direction:column;
+  background:linear-gradient(180deg, rgba(23,31,51,.92), rgba(11,19,38,.96));
+  border:1px solid rgba(173,198,255,.18);
+  border-radius:18px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(173,198,255,.08) inset;
+  overflow:hidden;
+  animation:demo-pop .28s cubic-bezier(.22,.61,.36,1) both;
+}
+.demo-modal__header{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 18px;
+  border-bottom:1px solid rgba(173,198,255,.10);
+  background:linear-gradient(180deg, rgba(173,198,255,.06), transparent);
+}
+.demo-modal__titlewrap{display:flex;flex-direction:column;gap:2px;min-width:0}
+.demo-modal__eyebrow{
+  font-family:'Space Grotesk','Inter',system-ui,sans-serif;
+  text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:600;
+  color:#adc6ff;
+}
+.demo-modal__title{margin:0;font-size:18px;font-weight:700;color:#dae2fd;letter-spacing:.01em}
+.demo-modal__close{
+  flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:999px;
+  border:1px solid rgba(173,198,255,.2);
+  background:rgba(11,19,38,.4);
+  color:#dae2fd;cursor:pointer;
+  transition:transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.demo-modal__close:hover{transform:rotate(90deg);border-color:rgba(173,198,255,.55);background:rgba(173,198,255,.08)}
+.demo-modal__close:focus-visible{outline:2px solid #adc6ff;outline-offset:2px}
+.demo-modal__media{
+  position:relative;
+  background:#000;
+  width:100%;
+  flex:1 1 auto;
+  min-height:0;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.demo-modal__video{
+  display:block;
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  background:#000;
+}
+.demo-modal__footer{
+  padding:12px 18px;
+  border-top:1px solid rgba(173,198,255,.08);
+  background:rgba(11,19,38,.4);
+}
+.demo-modal__caption{margin:0;color:#c2c6d6;font-size:13px}
+
+@keyframes demo-fade{from{opacity:0}to{opacity:1}}
+@keyframes demo-pop{
+  from{opacity:0;transform:translateY(12px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+/* Lock body scroll while modal open */
+body.demo-open{overflow:hidden}
+
+@media (max-width: 640px){
+  .demo-modal{padding:0}
+  .demo-modal__dialog{
+    width:100%;height:100%;max-height:100vh;border-radius:0;border:0;
+  }
+  .demo-modal__media{flex:1 1 auto}
+  .demo-modal__title{font-size:16px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .demo-modal__backdrop, .demo-modal__dialog{animation:none}
+  .demo-modal__close{transition:none}
 }

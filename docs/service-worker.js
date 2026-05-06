@@ -1,4 +1,4 @@
-const CACHE_NAME = 'canoramiq-static-v3';
+const CACHE_NAME = 'canoramiq-static-v5';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
@@ -6,6 +6,7 @@ const PRECACHE_URLS = [
   '/styles/app-buttons.css',
   '/scripts/main.js',
   '/canoramiq_logo.png',
+  '/canoramiq_demo_poster.jpg',
   '/google-play.png',
   '/app-store.png'
 ];
@@ -65,12 +66,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Bypass cache for video assets (large + Range/206 responses can't be cached safely)
+  const url = new URL(request.url);
+  if (/\.(mp4|webm|mov)$/i.test(url.pathname)) {
+    return; // let the browser handle it directly
+  }
+
   // Cache-first for static assets; only cache successful same-origin responses.
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;
       return fetch(request).then((response) => {
-        if (response && response.ok && new URL(request.url).origin === self.location.origin) {
+        if (response && response.ok && response.status === 200 && new URL(request.url).origin === self.location.origin) {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         }

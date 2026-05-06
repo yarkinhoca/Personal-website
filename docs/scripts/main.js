@@ -539,4 +539,49 @@
     sections.forEach(s => { if (s.id) io.observe(s); });
   }
   initActiveNav();
+
+  // ── Demo video modal ──
+  function initDemoModal() {
+    const modal = document.getElementById('demo-modal');
+    const video = document.getElementById('demo-modal-video');
+    if (!modal || !video) return;
+    const source = video.querySelector('source[data-src]');
+    const openers = document.querySelectorAll('[data-open-demo]');
+    const closers = modal.querySelectorAll('[data-close-demo]');
+    let lastFocus = null;
+
+    const open = () => {
+      lastFocus = document.activeElement;
+      // Lazy-load the video src on first open to avoid 64MB upfront fetch
+      if (source && !source.src) {
+        source.src = source.getAttribute('data-src');
+        try { video.load(); } catch (_) {}
+      }
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('demo-open');
+      // Try to autoplay; ignore rejection (e.g., user-gesture rules)
+      const p = video.play();
+      if (p && typeof p.then === 'function') p.catch(() => {});
+      const closeBtn = modal.querySelector('.demo-modal__close');
+      if (closeBtn) closeBtn.focus({ preventScroll: true });
+    };
+
+    const close = () => {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.hidden = true;
+      document.body.classList.remove('demo-open');
+      try { video.pause(); } catch (_) {}
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        lastFocus.focus({ preventScroll: true });
+      }
+    };
+
+    openers.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); open(); }));
+    closers.forEach(btn => btn.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') close();
+    });
+  }
+  initDemoModal();
 })();
