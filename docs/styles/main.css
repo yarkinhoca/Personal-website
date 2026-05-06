@@ -1235,6 +1235,56 @@ html { scroll-behavior: smooth; }
 }
 
 /* Trust callout */
+/* === Motion layer (GSAP + ScrollTrigger + Lenis) === */
+.site-header{transition:background .3s ease, box-shadow .3s ease, padding .3s ease}
+.site-header.is-scrolled{box-shadow:0 6px 30px rgba(0,0,0,.45);background:rgba(11,19,38,.94)}
+.site-header.is-scrolled .brand .logo{height:42px;transition:height .3s ease}
+.brand .logo{transition:height .3s ease}
+
+/* Lenis recommended baseline */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:clip}
+
+/* Phone section parallax glow */
+#phone-scroll-section{position:relative;overflow:visible}
+.phone-bg-glow{
+  position:absolute;inset:-15% -10%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(600px 600px at 30% 30%, rgba(173,198,255,.22), transparent 60%),
+    radial-gradient(500px 500px at 70% 70%, rgba(74,225,118,.12), transparent 60%);
+  filter:blur(24px);will-change:transform,opacity;
+}
+#phone-scroll-section > *:not(.phone-bg-glow){position:relative;z-index:1}
+
+/* Horizontal pinned stepper for #how */
+#how .steps.is-horizontal{
+  display:flex;flex-wrap:nowrap;gap:32px;width:max-content;
+  padding:40px 60px;will-change:transform;
+}
+#how .steps.is-horizontal .step{flex:0 0 320px;min-height:260px}
+#how{overflow:hidden}
+
+/* 3D tilt support on feature cards */
+#features .cards{perspective:1200px}
+#features .card{transform-style:preserve-3d;will-change:transform;transition:box-shadow .3s ease}
+#features .card:hover{box-shadow:0 30px 60px rgba(0,0,0,.4),0 0 0 1px rgba(173,198,255,.25)}
+
+/* SplitType helpers */
+.split-line{overflow:hidden;display:block}
+
+/* Honor reduced motion globally */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+
+/* Mobile: disable horizontal stepper just in case */
+@media (max-width: 720px){
+  #how .steps.is-horizontal{display:grid;grid-template-columns:1fr;width:100%;padding:20px 0;transform:none !important}
+  #how .steps.is-horizontal .step{flex:initial}
+}
+
 .imu-callout {
   display: flex;
   align-items: flex-start;
