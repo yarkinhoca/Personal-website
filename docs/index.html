@@ -909,10 +909,18 @@
           <div class="cta-copy">
             <h2>Be the first to try CanoramIQ</h2>
             <p>We're preparing an invite-only beta. Leave your email and we’ll notify you when your device and region are supported.</p>
+            <p class="muted">Questions? Email us at <a class="link-muted" href="mailto:support@canoramiq.com">support@canoramiq.com</a>.</p>
           </div>
-          <form class="signup" name="signup" method="post" data-enhanced>
+          <form class="signup" name="signup" method="POST" action="https://formsubmit.co/support@canoramiq.com" data-enhanced>
             <label class="sr-only" for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            <!-- FormSubmit configuration -->
+            <input type="hidden" name="_subject" value="New CanoramIQ beta signup" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://www.canoramiq.com/?subscribed=1" />
+            <!-- Honeypot for bots -->
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" />
             <button class="btn btn-primary" type="submit">Request invite</button>
             <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
           </form>
@@ -945,6 +953,10 @@
           <details>
             <summary>Does IMU data drain my battery?</summary>
             <p>Minimal impact. The IMU sensors are low-power hardware that modern phones keep active anyway. CanoramIQ samples at a tuned rate balanced for accuracy and efficiency.</p>
+          </details>
+          <details>
+            <summary>How can I get in touch?</summary>
+            <p>For questions, partnerships, or support, email us at <a href="mailto:support@canoramiq.com">support@canoramiq.com</a>.</p>
           </details>        </div>
       </section>
     </main>
@@ -954,6 +966,7 @@
         <div class="footer-brand">
           <span class="brand-mini">CanoramIQ</span>
           <p class="muted">OBD telematics with GPS-aware anomaly detection.</p>
+          <p class="muted">Contact: <a class="link-muted" href="mailto:support@canoramiq.com">support@canoramiq.com</a></p>
         </div>
         <nav aria-label="Footer">
           <ul>
@@ -961,6 +974,7 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#kpis">KPIs</a></li>
             <li><a href="#faq">FAQ</a></li>
+            <li><a href="mailto:support@canoramiq.com">Contact</a></li>
           </ul>
         </nav>
         <div class="legal muted">

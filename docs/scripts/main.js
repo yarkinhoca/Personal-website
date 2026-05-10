@@ -143,24 +143,47 @@
     });
   }
 
-  // Progressive enhancement for the signup form
+  // Progressive enhancement for the signup form.
+  // Submits to FormSubmit (https://formsubmit.co) which forwards entries to
+  // support@canoramiq.com without a backend. Uses the AJAX endpoint so the
+  // visitor stays on the page; falls back to native form POST if JS fails.
   const form = document.querySelector('form[data-enhanced]');
   const note = document.getElementById('form-note');
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
-      const email = fd.get('email');
-      if (!email) return;
-      note && (note.textContent = 'Submitting…');
-      try {
-        // Placeholder: send to your email list provider or serverless endpoint
-        // Example fetch('/api/subscribe', { method:'POST', body: JSON.stringify({ email }), headers:{'Content-Type':'application/json'} })
-        await new Promise(r => setTimeout(r, 800));
+      const email = (fd.get('email') || '').toString().trim();
+      // Honeypot: if filled, silently pretend success (likely a bot)
+      if ((fd.get('_honey') || '').toString().length > 0) {
         note && (note.textContent = 'Thanks! We\'ll be in touch.');
         form.reset();
+        return;
+      }
+      if (!email) return;
+
+      note && (note.textContent = 'Submitting…');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/support@canoramiq.com', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            _subject: 'New CanoramIQ beta signup',
+            _template: 'table',
+            _captcha: 'false'
+          })
+        });
+        if (!res.ok) throw new Error('Network response was not ok');
+        note && (note.textContent = 'Thanks! We\'ll be in touch at ' + email + '.');
+        form.reset();
       } catch (err) {
-        note && (note.textContent = 'Something went wrong. Please try again.');
+        note && (note.innerHTML = 'Something went wrong. Please email us directly at <a href="mailto:support@canoramiq.com">support@canoramiq.com</a>.');
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
     });
   }
