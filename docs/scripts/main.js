@@ -607,4 +607,55 @@
     });
   }
   initDemoModal();
+
+  // Ambient promo video — lazy load + play only when in view, pause when off-screen/hidden.
+  function initPromoVideo() {
+    const frame = document.querySelector('.promo-frame');
+    const video = document.getElementById('promo-video');
+    if (!frame || !video) return;
+    const source = video.querySelector('source[data-src]');
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let loaded = false;
+    const ensureLoaded = () => {
+      if (loaded) return;
+      if (source && !source.src) source.src = source.getAttribute('data-src');
+      try { video.load(); } catch (_) {}
+      loaded = true;
+    };
+
+    const tryPlay = () => {
+      if (prefersReduced) return;
+      ensureLoaded();
+      const p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      frame.classList.add('is-visible');
+      tryPlay();
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          frame.classList.add('is-visible');
+          tryPlay();
+        } else {
+          try { video.pause(); } catch (_) {}
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(frame);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        try { video.pause(); } catch (_) {}
+      } else if (frame.getBoundingClientRect().top < window.innerHeight && frame.getBoundingClientRect().bottom > 0) {
+        tryPlay();
+      }
+    });
+  }
+  initPromoVideo();
 })();

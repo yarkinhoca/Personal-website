@@ -78,13 +78,40 @@
             </button>
             <a class="btn btn-ghost" href="#how">See how it works</a>
           </div>
-          <ul class="hero-highlights">
-            <li>OBD over Bluetooth</li>
-            <li>Drive-cycle aware logging</li>
-            <li>Map-centric analysis</li>
-            <li>Isolation Forest outliers</li>
-            <li>IMU sensor fusion</li>
-          </ul>
+          <div class="hero-ticker" aria-label="CanoramIQ capabilities" role="marquee">
+            <ul class="hero-ticker__track" aria-hidden="false">
+              <li>OBD over Bluetooth</li>
+              <li>Drive-cycle aware logging</li>
+              <li>Map-centric analysis</li>
+              <li>Isolation Forest outliers</li>
+              <li>IMU sensor fusion</li>
+              <li>Neural-net diagnostics</li>
+              <li>On-device inference</li>
+              <li>Fuel economy KPIs</li>
+              <li>Engine health scoring</li>
+              <li>Driver behavior insights</li>
+              <li>GPS-tagged telemetry</li>
+              <li>Pothole &amp; hard-brake detection</li>
+              <li>Multi-vehicle fleet view</li>
+              <li>Privacy-first &amp; offline-capable</li>
+            </ul>
+            <ul class="hero-ticker__track" aria-hidden="true">
+              <li>OBD over Bluetooth</li>
+              <li>Drive-cycle aware logging</li>
+              <li>Map-centric analysis</li>
+              <li>Isolation Forest outliers</li>
+              <li>IMU sensor fusion</li>
+              <li>Neural-net diagnostics</li>
+              <li>On-device inference</li>
+              <li>Fuel economy KPIs</li>
+              <li>Engine health scoring</li>
+              <li>Driver behavior insights</li>
+              <li>GPS-tagged telemetry</li>
+              <li>Pothole &amp; hard-brake detection</li>
+              <li>Multi-vehicle fleet view</li>
+              <li>Privacy-first &amp; offline-capable</li>
+            </ul>
+          </div>
 
           <!-- Muted industry icon strip -->
           <div class="industry-icons" aria-label="Supported industries">
@@ -256,6 +283,36 @@
         </div>
       </section> <!-- end phone-scroll-section -->
 
+
+      <!-- ═══ Promo video (ambient showcase) ═══ -->
+      <section id="promo" class="section promo-section" aria-labelledby="promo-title">
+        <div class="container promo-container">
+          <div class="promo-heading">
+            <span class="eyebrow">See it in action</span>
+            <h2 id="promo-title" class="promo-title">A quiet look at CanoramIQ</h2>
+            <p class="promo-sub">A short, ambient preview — no sound, no interruption.</p>
+          </div>
+          <figure class="promo-figure">
+            <div class="promo-frame">
+              <video
+                id="promo-video"
+                class="promo-video"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="./canoramiq_promo_poster.jpg"
+                aria-label="CanoramIQ promotional preview"
+                tabindex="-1"
+              >
+                <source data-src="./canoramiq_promo.mp4" type="video/mp4" />
+              </video>
+              <div class="promo-frame__glow" aria-hidden="true"></div>
+            </div>
+          </figure>
+        </div>
+      </section>
+      <!-- ═══ End promo video ═══ -->
 
 
       <!-- How it works -->
@@ -1007,8 +1064,8 @@
           </button>
         </header>
         <div class="demo-modal__media">
-          <video id="demo-modal-video" class="demo-modal__video" controls playsinline preload="metadata" poster="./canoramiq_demo_poster.jpg">
-            <source data-src="./canoramiq_demo_video.mp4" type="video/mp4" />
+          <video id="demo-modal-video" class="demo-modal__video" controls playsinline preload="metadata" poster="./canoramiq_promo_poster.jpg">
+            <source data-src="./canoramiq_promo.mp4" type="video/mp4" />
             Your browser does not support embedded video.
           </video>
         </div>
