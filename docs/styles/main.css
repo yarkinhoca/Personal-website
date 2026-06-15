@@ -1769,7 +1769,7 @@ h2::after{
 .promo-frame{
   position:relative;
   width:100%;
-  aspect-ratio: 1280 / 650;
+  aspect-ratio: 1280 / 520;
   border-radius:16px;
   overflow:hidden;
   background:rgba(11,19,38,.6);
