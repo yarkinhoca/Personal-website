@@ -70,13 +70,6 @@
           <p class="lead">CanoramIQ turns the phone in your pocket into a 100Hz data acquisition unit—fusing OBD-II, GPS, and a self-zeroing inertial platform into a single ground-truth model of your vehicle. No spec sheets, no manual setup: we solve the physics live, then surface the anomalies your ECU won't admit to for another three weeks.</p>
           <div class="cta">
             <a class="btn btn-primary" href="#cta">Join the beta</a>
-            <button type="button" class="btn btn-demo" data-open-demo aria-haspopup="dialog" aria-controls="demo-modal">
-              <span class="btn-demo__play" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-              </span>
-              <span>Watch the demo</span>
-            </button>
-            <a class="btn btn-ghost" href="#how">See how it works</a>
           </div>
           <div class="hero-ticker" aria-label="CanoramIQ capabilities" role="marquee">
             <ul class="hero-ticker__track" aria-hidden="false">
@@ -284,30 +277,31 @@
       </section> <!-- end phone-scroll-section -->
 
 
-      <!-- ═══ Promo video (ambient showcase) ═══ -->
-      <section id="promo" class="section promo-section" aria-label="CanoramIQ promotional preview">
+      <!-- Promo video -->
+      <section id="promo" class="section promo-section" aria-label="CanoramIQ product preview">
         <div class="container promo-container">
-          <figure class="promo-figure">
+          <figure class="promo-figure" data-scroll-video>
             <div class="promo-frame">
+              <div class="promo-frame__chrome" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
               <video
                 id="promo-video"
                 class="promo-video"
                 muted
-                loop
                 playsinline
-                preload="none"
+                preload="metadata"
                 poster="./canoramiq_promo_poster.jpg"
-                aria-label="CanoramIQ promotional preview"
+                aria-label="CanoramIQ product preview"
                 tabindex="-1"
               >
                 <source data-src="./canoramiq_promo.mp4" type="video/mp4" />
               </video>
-              <div class="promo-frame__glow" aria-hidden="true"></div>
+              <div class="promo-frame__progress" aria-hidden="true"><span></span></div>
             </div>
           </figure>
         </div>
       </section>
-      <!-- ═══ End promo video ═══ -->
 
 
       <!-- How it works -->
@@ -1037,31 +1031,6 @@
   <!-- Overlay removed: phone only in hero section -->
     </div>
 
-    <!-- Demo video modal -->
-    <div id="demo-modal" class="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title" aria-hidden="true" hidden>
-      <div class="demo-modal__backdrop" data-close-demo></div>
-      <div class="demo-modal__dialog" role="document">
-        <header class="demo-modal__header">
-          <div class="demo-modal__titlewrap">
-            <span class="demo-modal__eyebrow">Live demo</span>
-            <h2 id="demo-modal-title" class="demo-modal__title">CanoramIQ in action</h2>
-          </div>
-          <button type="button" class="demo-modal__close" data-close-demo aria-label="Close demo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-          </button>
-        </header>
-        <div class="demo-modal__media">
-          <video id="demo-modal-video" class="demo-modal__video" controls playsinline preload="metadata" poster="./canoramiq_promo_poster.jpg">
-            <source data-src="./canoramiq_promo.mp4" type="video/mp4" />
-            Your browser does not support embedded video.
-          </video>
-        </div>
-        <footer class="demo-modal__footer">
-          <p class="demo-modal__caption">A quick walkthrough of drive logging, KPIs, and the GPS-aware report.</p>
-        </footer>
-      </div>
-    </div>
-
     <!-- Leaflet JS -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -1079,7 +1048,64 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+        let refreshing = false;
+
+        window.clearCanoramIQCache = function clearCanoramIQCache() {
+          return new Promise((resolve) => {
+            const reload = () => {
+              resolve();
+              window.location.reload();
+            };
+
+            if (!navigator.serviceWorker.controller) {
+              if ('caches' in window) {
+                caches.keys()
+                  .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+                  .finally(reload);
+              } else {
+                reload();
+              }
+              return;
+            }
+
+            const onMessage = (event) => {
+              if (event.data && event.data.type === 'SITE_CACHE_CLEARED') {
+                navigator.serviceWorker.removeEventListener('message', onMessage);
+                reload();
+              }
+            };
+
+            navigator.serviceWorker.addEventListener('message', onMessage);
+            navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_SITE_CACHE' });
+          });
+        };
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (refreshing) return;
+          refreshing = true;
+          window.location.reload();
+        });
+
+        navigator.serviceWorker.register('/service-worker.js', { updateViaCache: 'none' })
+          .then((registration) => {
+            registration.update().catch(()=>{});
+
+            if (registration.waiting) {
+              registration.waiting.postMessage('SKIP_WAITING');
+            }
+
+            registration.addEventListener('updatefound', () => {
+              const worker = registration.installing;
+              if (!worker) return;
+
+              worker.addEventListener('statechange', () => {
+                if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                  worker.postMessage('SKIP_WAITING');
+                }
+              });
+            });
+          })
+          .catch(()=>{});
       });
     }
   </script>

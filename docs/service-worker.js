@@ -1,4 +1,5 @@
-const CACHE_NAME = 'canoramiq-static-v5';
+const CACHE_VERSION = '2026-06-16-5';
+const CACHE_NAME = `canoramiq-static-${CACHE_VERSION}`;
 const PRECACHE_URLS = [
   '/',
   '/index.html',
@@ -11,13 +12,27 @@ const PRECACHE_URLS = [
   '/app-store.png'
 ];
 
+function clearOldCaches() {
+  return caches.keys().then((keys) =>
+    Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
+  );
+}
+
+function clearAllSiteCaches() {
+  return caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
+}
+
+function networkFreshRequest(request) {
+  return new Request(request, { cache: 'no-store' });
+}
+
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) =>
       Promise.all(
         PRECACHE_URLS.map((url) =>
-          fetch(url, { cache: 'no-cache' })
+          fetch(url, { cache: 'reload' })
             .then((res) => {
               if (res && res.ok) return cache.put(url, res.clone());
             })
@@ -30,14 +45,20 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+    clearOldCaches()
       .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data && event.data.type === 'CLEAR_SITE_CACHE') {
+    event.waitUntil(
+      clearAllSiteCaches().then(() => {
+        if (event.source) event.source.postMessage({ type: 'SITE_CACHE_CLEARED' });
+      })
+    );
+  }
 });
 
 function isHtmlRequest(request) {
@@ -50,10 +71,13 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
 
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
   // Network-first for HTML/navigation so a bad cached page can't get stuck.
   if (isHtmlRequest(request)) {
     event.respondWith(
-      fetch(request)
+      fetch(networkFreshRequest(request))
         .then((response) => {
           if (response && response.ok) {
             const copy = response.clone();
@@ -61,28 +85,26 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
-        .catch(() => caches.match(request).then((cached) => cached || caches.match('/index.html')))
+        .catch(() => caches.match(request).then((cached) => cached || caches.match('/index.html') || Response.error()))
     );
     return;
   }
 
   // Bypass cache for video assets (large + Range/206 responses can't be cached safely)
-  const url = new URL(request.url);
   if (/\.(mp4|webm|mov)$/i.test(url.pathname)) {
     return; // let the browser handle it directly
   }
 
-  // Cache-first for static assets; only cache successful same-origin responses.
+  // Network-first for static assets so returning devices get the latest deploy.
   event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request).then((response) => {
+    fetch(networkFreshRequest(request))
+      .then((response) => {
         if (response && response.ok && response.status === 200 && new URL(request.url).origin === self.location.origin) {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         }
         return response;
-      });
-    })
+      })
+      .catch(() => caches.match(request).then((cached) => cached || Response.error()))
   );
 });

@@ -563,60 +563,22 @@
   }
   initActiveNav();
 
-  // ── Demo video modal ──
-  function initDemoModal() {
-    const modal = document.getElementById('demo-modal');
-    const video = document.getElementById('demo-modal-video');
-    if (!modal || !video) return;
-    const source = video.querySelector('source[data-src]');
-    const openers = document.querySelectorAll('[data-open-demo]');
-    const closers = modal.querySelectorAll('[data-close-demo]');
-    let lastFocus = null;
-
-    const open = () => {
-      lastFocus = document.activeElement;
-      // Lazy-load the video src on first open to avoid 64MB upfront fetch
-      if (source && !source.src) {
-        source.src = source.getAttribute('data-src');
-        try { video.load(); } catch (_) {}
-      }
-      modal.hidden = false;
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('demo-open');
-      // Try to autoplay; ignore rejection (e.g., user-gesture rules)
-      const p = video.play();
-      if (p && typeof p.then === 'function') p.catch(() => {});
-      const closeBtn = modal.querySelector('.demo-modal__close');
-      if (closeBtn) closeBtn.focus({ preventScroll: true });
-    };
-
-    const close = () => {
-      modal.setAttribute('aria-hidden', 'true');
-      modal.hidden = true;
-      document.body.classList.remove('demo-open');
-      try { video.pause(); } catch (_) {}
-      if (lastFocus && typeof lastFocus.focus === 'function') {
-        lastFocus.focus({ preventScroll: true });
-      }
-    };
-
-    openers.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); open(); }));
-    closers.forEach(btn => btn.addEventListener('click', close));
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') close();
-    });
-  }
-  initDemoModal();
-
-  // Ambient promo video — lazy load + play only when in view, pause when off-screen/hidden.
+  // Promo video — scroll-scrubbed when metadata is available, calm autoplay fallback otherwise.
   function initPromoVideo() {
-    const frame = document.querySelector('.promo-frame');
+    const figure = document.querySelector('[data-scroll-video]');
+    const frame = figure ? figure.querySelector('.promo-frame') : null;
+    const stage = figure ? figure.closest('.promo-section') : null;
     const video = document.getElementById('promo-video');
-    if (!frame || !video) return;
+    if (!figure || !frame || !stage || !video) return;
     const source = video.querySelector('source[data-src]');
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const progress = frame.querySelector('.promo-frame__progress span');
 
     let loaded = false;
+    let inView = false;
+    let ticking = false;
+    let canScrub = false;
+
     const ensureLoaded = () => {
       if (loaded) return;
       if (source && !source.src) source.src = source.getAttribute('data-src');
@@ -624,36 +586,88 @@
       loaded = true;
     };
 
-    const tryPlay = () => {
-      if (prefersReduced) return;
+    const setProgress = (value) => {
+      const clamped = Math.max(0, Math.min(1, value));
+      if (progress) progress.style.transform = `scaleX(${clamped})`;
+      return clamped;
+    };
+
+    const scrub = () => {
+      ticking = false;
+      if (!inView || !canScrub || !Number.isFinite(video.duration) || video.duration <= 0) return;
+
+      const rect = stage.getBoundingClientRect();
+      const scrollable = Math.max(1, rect.height - window.innerHeight);
+      const rawProgress = (0 - rect.top) / scrollable;
+      const amount = setProgress(rawProgress);
+      const targetTime = amount * Math.max(0, video.duration - 0.08);
+
+      if (Math.abs(video.currentTime - targetTime) > 0.05) {
+        try { video.currentTime = targetTime; } catch (_) {}
+      }
+    };
+
+    const requestScrub = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(scrub);
+    };
+
+    const tryFallbackPlay = () => {
+      if (prefersReduced || canScrub) return;
       ensureLoaded();
       const p = video.play();
       if (p && typeof p.catch === 'function') p.catch(() => {});
     };
 
+    video.addEventListener('loadedmetadata', () => {
+      canScrub = Number.isFinite(video.duration) && video.duration > 0;
+      if (canScrub) {
+        try { video.pause(); } catch (_) {}
+        requestScrub();
+      }
+    });
+
+    video.addEventListener('timeupdate', () => {
+      if (!canScrub && Number.isFinite(video.duration) && video.duration > 0) {
+        setProgress(video.currentTime / video.duration);
+      }
+    });
+
     if (!('IntersectionObserver' in window)) {
+      inView = true;
       frame.classList.add('is-visible');
-      tryPlay();
+      ensureLoaded();
+      window.addEventListener('scroll', requestScrub, { passive: true });
+      window.addEventListener('resize', requestScrub, { passive: true });
+      requestScrub();
       return;
     }
 
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        inView = entry.isIntersecting;
         if (entry.isIntersecting) {
           frame.classList.add('is-visible');
-          tryPlay();
+          ensureLoaded();
+          requestScrub();
+          tryFallbackPlay();
         } else {
           try { video.pause(); } catch (_) {}
         }
       });
-    }, { threshold: 0.35 });
-    io.observe(frame);
+    }, { threshold: 0.05 });
+    io.observe(stage);
+
+    window.addEventListener('scroll', requestScrub, { passive: true });
+    window.addEventListener('resize', requestScrub, { passive: true });
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         try { video.pause(); } catch (_) {}
-      } else if (frame.getBoundingClientRect().top < window.innerHeight && frame.getBoundingClientRect().bottom > 0) {
-        tryPlay();
+      } else if (inView) {
+        requestScrub();
+        tryFallbackPlay();
       }
     });
   }
