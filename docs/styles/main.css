@@ -98,19 +98,18 @@ a:hover{color:#fff}
   width:auto;
   aspect-ratio:1/1;
   flex:0 0 auto;
-  border-radius:18px;
+  /* Image has built-in rounded transparent corners (~22.4%) */
+  border-radius:22.37%;
   background:transparent;
   padding:0;
-  box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 0 1px rgba(173,198,255,.08) inset;
-  filter:drop-shadow(0 0 14px rgba(173,198,255,.28));
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.35)) drop-shadow(0 0 14px rgba(173,198,255,.28));
   opacity:1;
   transform:translateZ(0);
-  transition:transform .25s ease, filter .25s ease, box-shadow .25s ease, height .3s ease;
+  transition:transform .25s ease, filter .25s ease, height .3s ease;
 }
 .brand:hover .logo{
   transform:translateY(-1px) scale(1.02);
-  filter:drop-shadow(0 0 22px rgba(173,198,255,.55));
-  box-shadow:0 12px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(173,198,255,.18) inset;
+  filter:drop-shadow(0 12px 30px rgba(0,0,0,.45)) drop-shadow(0 0 22px rgba(173,198,255,.55));
 }
 .nav-toggle{display:none;background:none;border:0;color:var(--text)}
 .nav{width:100%}
@@ -740,13 +739,13 @@ html { scroll-behavior: smooth; }
   .who-cards{grid-template-columns:1fr}
 }
 @media (max-width: 900px){
-  .brand .logo{height:104px;border-radius:22px}
+  .brand .logo{height:104px}
 }
 @media (max-width: 560px){
-  .brand .logo{height:88px;border-radius:20px}
+  .brand .logo{height:88px}
 }
 @media (max-width: 360px){
-  .brand .logo{height:76px;width:auto;flex-basis:auto;border-radius:18px}
+  .brand .logo{height:76px;width:auto;flex-basis:auto}
 }
 
 /* ── Glass-panel & HUD utilities ──────────────────────────── */

@@ -1,4 +1,4 @@
-const CACHE_VERSION = '2026-06-16-5';
+const CACHE_VERSION = '2026-07-27-1';
 const CACHE_NAME = `canoramiq-static-${CACHE_VERSION}`;
 const PRECACHE_URLS = [
   '/',

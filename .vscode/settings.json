@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python3 -c \"\nfrom PIL import Image\nim = Image\\.open\\('docs/canoramiq_logo\\.png'\\)\\.convert\\('RGB'\\)\nw,h = im\\.size\npx = im\\.load\\(\\)\nbg = px\\[4,4\\]\ndef diff\\(p,q\\): return abs\\(p\\[0\\]-q\\[0\\]\\)\\+abs\\(p\\[1\\]-q\\[1\\]\\)\\+abs\\(p\\[2\\]-q\\[2\\]\\)\n# scan multiple columns for bottom edge with lower threshold\nfor x in \\(300, 500, 998, 1500, 1700\\):\n    b = next\\(\\(y for y in range\\(h-1,-1,-1\\) if diff\\(px\\[x,y\\],bg\\)>25\\), None\\)\n    t = next\\(\\(y for y in range\\(h\\) if diff\\(px\\[x,y\\],bg\\)>25\\), None\\)\n    print\\(f'x=\\{x\\}: top=\\{t\\} bottom=\\{b\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
